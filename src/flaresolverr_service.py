@@ -296,6 +296,13 @@ def get_correct_window(driver: WebDriver) -> WebDriver:
                 return driver
     return driver
 
+def switch_to_new_tab(driver: WebDriver, url: str) -> None:
+    logging.debug("Opening new tab...")
+    driver.execute_script(f"window.open('{url}', 'new tab')")
+    time.sleep(2)
+    logging.debug("Closing original tab...")
+    time.sleep(2)
+    driver.close()
 
 def access_page(driver: WebDriver, url: str) -> None:
     driver.get(url)
@@ -369,6 +376,12 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
         while True:
             try:
                 attempt = attempt + 1
+
+                if attempt == 4:
+                    switch_to_new_tab(driver, req.url)
+                    driver = get_correct_window(driver)
+                    time.sleep(4)
+
                 # wait until the title changes
                 for title in CHALLENGE_TITLES:
                     logging.debug("Waiting for title (attempt " + str(attempt) + "): " + title)

@@ -166,6 +166,7 @@ def get_webdriver(proxy: dict = None) -> WebDriver:
     # options.add_argument('--headless')
 
     options.add_argument("--auto-open-devtools-for-tabs")
+    options.add_argument("--disable-popup-blocking")
 
     # if we are inside the Docker container, we avoid downloading the driver
     driver_exe_path = None
