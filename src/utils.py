@@ -130,6 +130,51 @@ def create_proxy_extension(proxy: dict) -> str:
 
     return proxy_extension_dir
 
+def create_cloudflare_extension() -> str:
+    manifest_json = """
+    {
+        "manifest_version": 3,
+        "name": "Turnstile Patcher",
+        "version": "2.1",
+        "content_scripts": [
+            {
+                "js": [
+                    "./script.js"
+                ],
+                "matches": [
+                    "<all_urls>"
+                ],
+                "run_at": "document_start",
+                "all_frames": true,
+                "world": "MAIN"
+            }
+        ]
+    }
+    """
+
+    script_js = """
+    Object.defineProperty(MouseEvent.prototype, 'screenX', {
+        get: function () {
+            return this.clientX + window.screenX;
+        }
+    });
+
+    Object.defineProperty(MouseEvent.prototype, 'screenY', {
+        get: function () {
+            return this.clientY + window.screenY;
+        }
+    });
+    """
+
+    cloudflare_extension_dir = tempfile.mkdtemp()
+
+    with open(os.path.join(cloudflare_extension_dir, "manifest.json"), "w") as f:
+        f.write(manifest_json)
+
+    with open(os.path.join(cloudflare_extension_dir, "script.js"), "w") as f:
+        f.write(script_js)
+
+    return cloudflare_extension_dir
 
 async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     logging.debug('Launching web browser with nodriver...')
@@ -155,6 +200,8 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     language = os.environ.get('LANG', None)
     if language is not None:
         options.lang = language
+    else:
+        options.lang = "en-US"
 
     # Fix for Chrome 117 | https://github.com/FlareSolverr/FlareSolverr/issues/910
     if USER_AGENT is not None:
@@ -168,6 +215,11 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
         proxy_url = proxy['url']
         logging.debug("Using proxy: %s", proxy_url)
         options.add_argument('--proxy-server=%s' % proxy_url)
+
+    # add cloudflare addon
+    # https://github.com/TheFalloutOf76/CDP-bug-MouseEvent-.screenX-.screenY-patcher
+    cloudflare_extension_dir = create_cloudflare_extension()
+    options.add_extension(os.path.abspath(cloudflare_extension_dir))
 
     # note: headless mode is detected (headless = True)
     # we launch the browser in head-full mode with the window hidden
@@ -492,6 +544,7 @@ def start_xvfb_display():
         from xvfbwrapper import Xvfb
         XVFB_DISPLAY = Xvfb()
         XVFB_DISPLAY.start()
+        logging.debug("VIRTUAL SCREEN STARTED")
 
 
 def object_to_dict(_object):

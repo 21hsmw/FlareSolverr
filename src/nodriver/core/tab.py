@@ -278,25 +278,32 @@ class Tab(Connection):
         return items
 
     async def select_all(
-        self,
-        selector: str,
-        timeout: Union[int, float] = 10,
+        self, selector: str, timeout: Union[int, float] = 10, include_frames=False
     ) -> List[nodriver.Element]:
         """
         find multiple elements by css selector.
         can also be used to wait for such element to appear.
 
+
         :param selector: css selector, eg a[href], button[class*=close], a > img[src]
         :type selector: str
         :param timeout: raise timeout exception when after this many seconds nothing is found.
         :type timeout: float,int
+        :param include_frames: whether to include results in iframes.
+        :type include_frames: bool
         """
 
         loop = asyncio.get_running_loop()
         now = loop.time()
         selector = selector.strip()
+        items = []
+        if include_frames:
+            frames = await self.query_selector_all("iframe")
+            # unfortunately, asyncio.gather here is not an option
+            for fr in frames:
+                items.extend(await fr.query_selector_all(selector))
 
-        items = await self.query_selector_all(selector)
+        items.extend(await self.query_selector_all(selector))
         while not items:
             await self
             items = await self.query_selector_all(selector)
@@ -555,8 +562,8 @@ class Tab(Connection):
         :rtype:
         """
         doc = await self.send(cdp.dom.get_document(-1, True))
-        search_id, nresult = await self.send(cdp.dom.perform_search(text, True))
         text = text.strip()
+        search_id, nresult = await self.send(cdp.dom.perform_search(text, True))
 
         node_ids = await self.send(cdp.dom.get_search_results(search_id, 0, nresult))
         await self.send(cdp.dom.discard_search_results(search_id))
@@ -1304,6 +1311,59 @@ class Tab(Connection):
                 parent = parent.parent
         await checkbox.mouse_move()
         await checkbox.mouse_click()
+
+    async def get_local_storage(self):
+        """
+        get local storage items as dict of strings (careful!, proper deserialization needs to be done if needed)
+
+        :return:
+        :rtype:
+        """
+        if not self.target.url:
+            await self
+
+        # there must be a better way...
+        origin = "/".join(self.url.split("/", 3)[:-1])
+
+        items = await self.send(
+            cdp.dom_storage.get_dom_storage_items(
+                cdp.dom_storage.StorageId(is_local_storage=True, security_origin=origin)
+            )
+        )
+        retval = {}
+        for item in items:
+            retval[item[0]] = item[1]
+        return retval
+
+    async def set_local_storage(self, items: dict):
+        """
+        set local storage.
+        dict items must be strings. simple types will be converted to strings automatically.
+
+        :param items: dict containing {key:str, value:str}
+        :type items: dict[str,str]
+        :return:
+        :rtype:
+        """
+        if not self.target.url:
+            await self
+        # there must be a better way...
+        origin = "/".join(self.url.split("/", 3)[:-1])
+
+        await asyncio.gather(
+            *[
+                self.send(
+                    cdp.dom_storage.set_dom_storage_item(
+                        storage_id=cdp.dom_storage.StorageId(
+                            is_local_storage=True, security_origin=origin
+                        ),
+                        key=str(key),
+                        value=str(val),
+                    )
+                )
+                for key, val in items.items()
+            ]
+        )
 
     def __call__(
         self,

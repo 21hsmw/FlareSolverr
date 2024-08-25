@@ -514,6 +514,8 @@ class Element:
         modifiers: typing.Optional[int] = 0,
         hold: bool = False,
         _until_event: typing.Optional[type] = None,
+        x: float = 0,
+        y: float = 0,
     ):
         """native click (on element) . note: this likely does not work atm, use click() instead
 
@@ -522,11 +524,18 @@ class Element:
         :param modifiers: *(Optional)* Bit field representing pressed modifier keys.
                 Alt=1, Ctrl=2, Meta/Command=4, Shift=8 (default: 0).
         :param _until_event: internal. event to wait for before returning
+        :param x: x position to move mouse to (default: 0)
+        :type x: float
+        :param y: y position to move mouse to (default: 0)
+        :type y: float
         :return:
 
         """
         try:
-            center = (await self.get_position()).center
+            if int(x) > 0 and int(y) > 0:
+                center = (int(x), int(y))
+            else:
+                center = (await self.get_position()).center
         except AttributeError:
             return
         if not center:
@@ -564,23 +573,37 @@ class Element:
         except:  # noqa
             pass
 
-    async def mouse_move(self):
-        """moves mouse (not click), to element position. when an element has an
-        hover/mouseover effect, this would trigger it"""
+    async def mouse_move(
+        self,
+        x: float = 0,
+        y: float = 0,
+    ):
+        """
+        moves mouse (not click), to element position. when an element has an
+        hover/mouseover effect, this would trigger it
+
+        :param x: x position to move mouse to (default: 0)
+        :type x: float
+        :param y: y position to move mouse to (default: 0)
+        :type y: float
+        """
         try:
-            center = (await self.get_position()).center
+            if int(x) > 0 and int(y) > 0:
+                pos = (int(x), int(y))
+            else:
+                pos = (await self.get_position()).center
         except AttributeError:
             logger.debug("did not find location for %s", self)
             return
         logger.debug(
-            "mouse move to location %.2f, %.2f where %s is located", *center, self
+            "mouse move to location %.2f, %.2f where %s is located", *pos, self
         )
         await self._tab.send(
-            cdp.input_.dispatch_mouse_event("mouseMoved", x=center[0], y=center[1])
+            cdp.input_.dispatch_mouse_event("mouseMoved", x=pos[0], y=pos[1])
         )
         await self._tab.sleep(0.05)
         await self._tab.send(
-            cdp.input_.dispatch_mouse_event("mouseReleased", x=center[0], y=center[1])
+            cdp.input_.dispatch_mouse_event("mouseReleased", x=pos[0], y=pos[1])
         )
 
     async def mouse_drag(
@@ -735,14 +758,23 @@ class Element:
         return await self.apply("(element) => element.focus()")
 
     async def select_option(self):
-        """for form (select) fields. when you have queried the options you can call this method on the option object
+        """
+        for form (select) fields. when you have queried the options you can call this method on the option object.
+        02/08/2024: fixed the problem where events are not fired when programattically selecting an option.
 
         calling :func:`option.select_option()` will use that option as selected value.
         does not work in all cases.
 
         """
         if self.node_name == "OPTION":
-            return await self.apply("(o) => o.selected = true")
+            await self.apply(
+                """
+                (o) => {  
+                    o.selected = true ; 
+                    o.dispatchEvent(new Event('change', {view: window,bubbles: true}))
+                }
+                """
+            )
 
     async def set_value(self, value):
         await self._tab.send(cdp.dom.set_node_value(node_id=self.node_id, value=value))
@@ -1154,3 +1186,12 @@ class Position(cdp.dom.Quad):
 
     def __repr__(self):
         return f"<Position(x={self.left}, y={self.top}, width={self.width}, height={self.height})>"
+
+
+async def resolve_node(tab: Tab, node_id: cdp.dom.NodeId):
+    remote_obj: cdp.runtime.RemoteObject = await tab.send(
+        cdp.dom.resolve_node(node_id=node_id)
+    )
+    node_id: cdp.dom.NodeId = await tab.send(cdp.dom.request_node(remote_obj.object_id))
+    node: cdp.dom.Node = await tab.send(cdp.dom.describe_node(node_id))
+    return node

@@ -35,7 +35,7 @@ CHALLENGE_TITLES = [
 CHALLENGE_SELECTORS = [
     # Cloudflare
     '#cf-challenge-running', '.ray_id', '.attack-box',
-    '#cf-please-wait', '#challenge-spinner', '#trk_jschal_js', '#turnstile-wrapper', '.lds-ring',
+    '#cf-please-wait', '#challenge-spinner', '#trk_jschal_js', '#turnstile-wrapper', '.lds-ring', '.loading-spinner', '.main-wrapper',
     # Custom CloudFlare for EbookParadijs, Film-Paleis, MuziekFabriek and Puur-Hollands
     'td.info #js_info',
     # Fairlane / pararius.com
@@ -284,6 +284,8 @@ async def _evil_logic_nd(req: V1RequestBase, driver: Browser, method: str) -> Ch
     # wait for the page and make sure it catches the load event
     await tab.wait(1)
     await tab
+
+    # get current page nodes
     doc: utils.nd.cdp.dom.Node = await tab.send(utils.nd.cdp.dom.get_document(-1, True))
 
     if utils.get_config_log_html():
@@ -323,6 +325,7 @@ async def _evil_logic_nd(req: V1RequestBase, driver: Browser, method: str) -> Ch
         while True:
             try:
                 attempt = attempt + 1
+                await tab.wait(1)
 
                 # wait until the title changes
                 for title in CHALLENGE_TITLES:
@@ -350,7 +353,8 @@ async def _evil_logic_nd(req: V1RequestBase, driver: Browser, method: str) -> Ch
                                 break
                             if time.time() - start_time > SHORT_TIMEOUT:
                                 raise TimeoutError
-                            await tab.wait(0.1)
+                            del element
+                            await asyncio.sleep(0.1)
 
                 # all elements not found
                 break
@@ -397,33 +401,31 @@ async def _evil_logic_nd(req: V1RequestBase, driver: Browser, method: str) -> Ch
 
 async def click_verify_nd(tab: Tab):
     try:
-        logging.debug("Trying to find the closest Cloudflare clickable element...")
+        logging.debug("Checking if cloudflare captcha is present on page...")
         await tab.wait(2)
-        cf_element = await tab.find(text="//iframe[starts-with(@id, 'cf-chl-widget-')]",
+        cf_element = await tab.find(text="cf-chl-widget-",
                                     timeout=SHORT_TIMEOUT)
+
         if cf_element:
-            # await tab.wait(2)
-            await cf_element.mouse_move()
-            await cf_element.mouse_click()
-            logging.debug("Cloudflare element found and clicked!")
-    except Exception:
-        logging.debug("Cloudflare element not found on the page.")
+            logging.debug("Cloudflare captcha found!")
+            
+            # get the iframe target
+            for target in tab.browser.targets:
+                if "challenges.cloudflare.com" in target.url:
+                    cf_tab = target
+                    break
+            logging.debug("Found captcha iframe!")
 
-    # INFO: nodriver is having a hard time with iframes, it can't find the text inside it...
-    #       it needs more custom code to select the iframe and find the elements, will try another time.
+            # get checkbox from iframe
+            cf_checkbox = await cf_tab.find(text="main-wrapper",
+                                            timeout=SHORT_TIMEOUT)
 
-    # try:
-    #     logging.debug("Trying to find the correct 'Verify you are human' button...")
-    #     cf_verify_human = await tab.find_element_by_text(text="Verify you are human", best_match=True)
-    #     if cf_verify_human:
-    #         await cf_verify_human.mouse_move()
-    #         await tab.wait(1)
-    #         awaitcf_verify_human.mouse_click()
-    #         logging.debug("The Cloudflare 'Verify you are human' button found and clicked!")
-    # except Exception:
-    #     logging.debug("The Cloudflare 'Verify you are human' button not found on the page.")
+            await cf_checkbox.mouse_click()
+            logging.debug("Checkbox element clicked!")
+    except Exception as e:
+        logging.debug(f"Cloudflare element not found on the page - {str(e)}")
 
-    time.sleep(2)
+    await asyncio.sleep(2)
 
 async def _post_request_nd(req: V1RequestBase) -> str:
     post_form = f'<form id="hackForm" action="{req.url}" method="POST">'

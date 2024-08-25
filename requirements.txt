@@ -2,14 +2,14 @@ bottle==0.12.25
 waitress==2.1.2
 selenium==4.15.2
 func-timeout==4.3.5
-psutil==5.9.8
+psutil==6.0.0
 prometheus-client==0.17.1
 # required by undetected_chromedriver
 requests==2.31.0
 certifi==2023.7.22
 packaging==24.0
 # required by undetected_chromedriver & nodriver
-websockets==11.0.3
+websockets==13.0
 # required by nodriver
 deprecated==1.2.14
 mss==9.0.1

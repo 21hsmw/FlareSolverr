@@ -32,6 +32,8 @@ async def start(
     sandbox: Optional[bool] = True,
     lang: Optional[str] = None,
     windows_headless: Optional[bool] = False,
+    host: Optional[str] = None,
+    port: Optional[int] = None,
     **kwargs: Optional[dict],
 ) -> Browser:
     """
@@ -39,6 +41,8 @@ async def start(
     conveniently, you can just call it bare (no parameters) to quickly launch an instance
     with best practice defaults.
     note: this should be called ```await start()```
+
+    windows_headless: Optional[bool] = False,
 
     :param user_data_dir:
     :type user_data_dir: PathLike
@@ -61,9 +65,18 @@ async def start(
 
     :param windows_headless:
     :type windows_headless: bool
+
+    :param port: if you connect to an existing debuggable session, you can specify the port here
+                 if both host and port are provided, nodriver will not start a local chrome browser!
+    :type port: int
+
+    :param host: if you connect to an existing debuggable session, you can specify the host here
+                 if both host and port are provided, nodriver will not start a local chrome browser!
+    :type host: str
     :return:
     """
     if not config:
+
         config = Config(
             user_data_dir,
             headless,
@@ -72,6 +85,8 @@ async def start(
             sandbox,
             lang,
             windows_headless,
+            host=host,
+            port=port,
             **kwargs,
         )
     from .browser import Browser
@@ -165,9 +180,10 @@ def filter_recurse_all(
             if predicate(child):
                 # if predicate is True
                 out.append(child)
+            if child.shadow_roots is not None:
+                out.extend(filter_recurse_all(child.shadow_roots[0], predicate))
             out.extend(filter_recurse_all(child, predicate))
-            # if result:
-            #     out.append(result)
+
     return out
 
 
@@ -187,6 +203,10 @@ def filter_recurse(doc: T, predicate: Callable[[cdp.dom.Node, Element], bool]) -
             if predicate(child):
                 # if predicate is True
                 return child
+            if child.shadow_roots:
+                shadow_root_result = filter_recurse(child.shadow_roots[0], predicate)
+                if shadow_root_result:
+                    return shadow_root_result
             result = filter_recurse(child, predicate)
             if result:
                 return result

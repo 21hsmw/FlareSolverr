@@ -71,6 +71,8 @@ class Browser:
         browser_args: List[str] = None,
         sandbox: bool = True,
         windows_headless: bool = False,
+        host: str = None,
+        port: int = None,
         **kwargs,
     ) -> Browser:
         """
@@ -84,6 +86,8 @@ class Browser:
                 browser_args=browser_args or [],
                 sandbox=sandbox,
                 windows_headless=windows_headless,
+                host=host,
+                port=port,
                 **kwargs,
             )
         instance = cls(config)
@@ -282,28 +286,32 @@ class Browser:
 
         # self.config.update(kwargs)
         connect_existing = False
-        if self.config.host and self.config.port:
+        if self.config.host is not None and self.config.port is not None:
             connect_existing = True
-        self.config.host = self.config.host or "127.0.0.1"
-        self.config.port = self.config.port or util.free_port()
+        else:
+            self.config.host = "127.0.0.1"
+            self.config.port = util.free_port()
 
-        logger.debug("BROWSER EXECUTABLE PATH: %s", self.config.browser_executable_path)
-        if not pathlib.Path(self.config.browser_executable_path).exists():
-            raise FileNotFoundError(
-                (
-                    """
-                ---------------------
-                Could not determine browser executable.
-                ---------------------
-                Make sure your browser is installed in the default location (path).
-                If you are sure about the browser executable, you can specify it using
-                the `browser_executable_path='{}` parameter."""
-                ).format(
-                    "/path/to/browser/executable"
-                    if is_posix
-                    else "c:/path/to/your/browser.exe"
-                )
+        if not connect_existing:
+            logger.debug(
+                "BROWSER EXECUTABLE PATH: %s", self.config.browser_executable_path
             )
+            if not pathlib.Path(self.config.browser_executable_path).exists():
+                raise FileNotFoundError(
+                    (
+                        """
+                    ---------------------
+                    Could not determine browser executable.
+                    ---------------------
+                    Make sure your browser is installed in the default location (path).
+                    If you are sure about the browser executable, you can specify it using
+                    the `browser_executable_path='{}` parameter."""
+                    ).format(
+                        "/path/to/browser/executable"
+                        if is_posix
+                        else "c:/path/to/your/browser.exe"
+                    )
+                )
 
         if getattr(self.config, "_extensions", None):  # noqa
             self.config.add_argument(
@@ -312,7 +320,6 @@ class Browser:
             )  # noqa
 
         exe = self.config.browser_executable_path
-        windows_headless = self.config.windows_headless
         params = self.config()
 
         logger.info(
@@ -336,14 +343,11 @@ class Browser:
                     startupinfo=startupinfo,
                 )
             )
-
             self._process_pid = self._process.pid
             logger.info("created process with pid %d " % self._process_pid)
 
         self._http = HTTPApi((self.config.host, self.config.port))
-
         util.get_registered_instances().add(self)
-
         await asyncio.sleep(0.25)
         for _ in range(5):
             try:
@@ -537,6 +541,9 @@ class Browser:
     def __iter__(self):
         self._i = self.tabs.index(self.main_tab)
         return self
+
+    def __reversed__(self):
+        return reversed(list(self.tabs))
 
     def __next__(self):
         try:
@@ -827,7 +834,7 @@ class HTTPApi:
             request.data = json.dumps(data).encode("utf-8")
 
         response = await asyncio.get_running_loop().run_in_executor(
-            None, urllib.request.urlopen, request
+            None, lambda: urllib.request.urlopen(request, timeout=10)
         )
         return json.loads(response.read())
 
