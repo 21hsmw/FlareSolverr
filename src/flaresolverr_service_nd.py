@@ -348,7 +348,7 @@ async def _evil_logic_nd(
     doc: utils.nd.cdp.dom.Node = await tab.send(utils.nd.cdp.dom.get_document(-1, True))
 
     if utils.get_config_log_html():
-        logging.debug(f"Response HTML:\n{await tab.get_content(_node=doc)}")
+        logging.debug(f"Response HTML:\n{utils.format_html(await tab.get_content(_node=doc))}")
     page_title = tab.target.title
 
     # find access denied titles
@@ -456,22 +456,27 @@ async def _evil_logic_nd(
     challenge_res = ChallengeResolutionResultT({})
     challenge_res.url = tab.target.url
     challenge_res.status = STATUS_CODE
+    logging.debug("requesting cookies from the driver")
     challenge_res.cookies = await driver.cookies.get_all(requests_cookie_format=True)
+    logging.debug("requesting user agent from the driver")
     challenge_res.userAgent = await utils.get_user_agent_nd(driver)
 
     if not req.returnOnlyCookies:
         challenge_res.headers = (
             {}
         )  # TO-DO: nodriver should support this, let's add it later
+        logging.debug("requesting html content from the tab")
         challenge_res.response = await tab.get_content(_node=doc)
 
     # Close websocket connection
     # to reuse the driver tab
     if req.session:
+        logging.debug("tab.aclose()")
         await tab.aclose()
     else:
+        logging.debug("tab.close()")
         await tab.close()
-        logging.debug("Tab was closed")
+    logging.debug("Tab was closed")
 
     res.result = challenge_res
     return res

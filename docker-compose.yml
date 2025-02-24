@@ -7,6 +7,7 @@ services:
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
+      - LANG=${LANG:-en}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Europe/London
       - DRIVER=${DRIVER:-nodriver}

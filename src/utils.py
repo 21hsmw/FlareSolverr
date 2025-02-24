@@ -6,7 +6,10 @@ import shutil
 import urllib.parse
 import tempfile
 import asyncio
+
+import platform
 import psutil
+from bs4 import BeautifulSoup
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 import undetected_chromedriver as uc
@@ -200,8 +203,10 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     # this option removes the zygote sandbox (it seems that the resolution is a bit faster)
     # options.add_argument('--no-zygote')
     # attempt to fix Docker ARM32 build
-    # options.add_argument('--disable-gpu-sandbox')
-    # options.add_argument('--disable-software-rasterizer')
+    # IS_ARMARCH = platform.machine().startswith(('arm', 'aarch'))
+    # if IS_ARMARCH:
+    #     options.add_argument('--disable-gpu-sandbox')
+    #     options.add_argument('--disable-software-rasterizer')
     # options.add_argument('--ignore-certificate-errors')
     # options.add_argument('--ignore-ssl-errors')
     # fix GL errors in ASUSTOR NAS
@@ -210,11 +215,7 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
     options.add_argument("--use-gl=swiftshader")
 
-    language = os.environ.get("LANG", None)
-    if language is not None:
-        options.lang = language
-    else:
-        options.lang = "en-US"
+    options.lang = os.environ.get("LANG", 'en')
 
     # Fix for Chrome 117 | https://github.com/FlareSolverr/FlareSolverr/issues/910
     if USER_AGENT is not None:
@@ -269,14 +270,17 @@ def get_webdriver_uc(proxy: dict = None) -> WebDriver:
     options = uc.ChromeOptions()
     options.add_argument("--no-sandbox")
     options.add_argument("--window-size=1920,1080")
+    options.add_argument('--disable-search-engine-choice-screen')
     # todo: this param shows a warning in chrome head-full
     options.add_argument("--disable-setuid-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     # this option removes the zygote sandbox (it seems that the resolution is a bit faster)
     options.add_argument("--no-zygote")
-    # attempt to fix Docker ARM32 build
-    options.add_argument("--disable-gpu-sandbox")
-    options.add_argument("--disable-software-rasterizer")
+    IS_ARMARCH = platform.machine().startswith(('arm', 'aarch'))
+    if IS_ARMARCH:
+        options.add_argument('--disable-gpu-sandbox')
+        options.add_argument('--disable-software-rasterizer')
+
     options.add_argument("--ignore-certificate-errors")
     options.add_argument("--ignore-ssl-errors")
     # fix GL errors in ASUSTOR NAS
@@ -285,9 +289,8 @@ def get_webdriver_uc(proxy: dict = None) -> WebDriver:
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
     options.add_argument("--use-gl=swiftshader")
 
-    language = os.environ.get("LANG", None)
-    if language is not None:
-        options.add_argument("--accept-lang=%s" % language)
+    language = os.environ.get("LANG", 'en')
+    options.add_argument("--accept-lang=%s" % language)
 
     # Fix for Chrome 117 | https://github.com/FlareSolverr/FlareSolverr/issues/910
     if USER_AGENT is not None:
@@ -362,6 +365,7 @@ def get_webdriver_uc(proxy: dict = None) -> WebDriver:
     # options = webdriver.ChromeOptions()
     # options.add_argument('--no-sandbox')
     # options.add_argument('--window-size=1920,1080')
+    # options.add_argument('--disable-search-engine-choice-screen')
     # options.add_argument('--disable-setuid-sandbox')
     # options.add_argument('--disable-dev-shm-usage')
     # driver = webdriver.Chrome(options=options)
@@ -594,3 +598,13 @@ def object_to_dict(_object):
     json_dict = json.loads(json.dumps(_object, default=lambda o: o.__dict__))
     # remove hidden fields
     return {k: v for k, v in json_dict.items() if not k.startswith("__")}
+
+
+def format_html(input_html):
+    # Parse the input HTML string
+    soup = BeautifulSoup(input_html, 'html.parser')
+
+    # Format the HTML with pretty print
+    formatted_html = soup.prettify()
+
+    return f"\n==========================================\n{formatted_html}\n==========================================\n"
