@@ -209,7 +209,6 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     # https://github.com/FlareSolverr/FlareSolverr/issues/782
     # https://github.com/microsoft/vscode/issues/127800#issuecomment-873342069
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
-    options.add_argument("--use-gl=swiftshader")
 
     language = os.environ.get("LANG", None)
     if language is not None:
@@ -284,7 +283,6 @@ def get_webdriver_uc(proxy: dict = None) -> WebDriver:
     # https://github.com/FlareSolverr/FlareSolverr/issues/782
     # https://github.com/microsoft/vscode/issues/127800#issuecomment-873342069
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
-    options.add_argument("--use-gl=swiftshader")
 
     language = os.environ.get("LANG", None)
     if language is not None:
