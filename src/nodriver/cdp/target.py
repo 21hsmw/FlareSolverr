@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -207,7 +206,7 @@ def activate_target(
         "method": "Target.activateTarget",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def attach_to_target(
@@ -292,7 +291,7 @@ def expose_dev_tools_protocol(
         "method": "Target.exposeDevToolsProtocol",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def create_browser_context(
@@ -330,9 +329,9 @@ def create_browser_context(
     return browser.BrowserContextID.from_json(json["browserContextId"])
 
 
-def get_browser_contexts() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[browser.BrowserContextID]]
-):
+def get_browser_contexts() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[browser.BrowserContextID]
+]:
     """
     Returns all browser contexts created with ``Target.createBrowserContext`` method.
 
@@ -411,7 +410,7 @@ def detach_from_target(
         "method": "Target.detachFromTarget",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispose_browser_context(
@@ -429,7 +428,7 @@ def dispose_browser_context(
         "method": "Target.disposeBrowserContext",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_target_info(
@@ -501,7 +500,7 @@ def send_message_to_target(
         "method": "Target.sendMessageToTarget",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_auto_attach(
@@ -533,7 +532,7 @@ def set_auto_attach(
         "method": "Target.setAutoAttach",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def auto_attach_related(
@@ -563,7 +562,7 @@ def auto_attach_related(
         "method": "Target.autoAttachRelated",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_discover_targets(
@@ -584,7 +583,7 @@ def set_discover_targets(
         "method": "Target.setDiscoverTargets",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_remote_locations(
@@ -604,7 +603,7 @@ def set_remote_locations(
         "method": "Target.setRemoteLocations",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Target.attachedToTarget")

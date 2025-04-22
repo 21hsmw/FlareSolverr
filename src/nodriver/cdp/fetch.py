@@ -209,7 +209,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Fetch.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable(
@@ -232,7 +232,7 @@ def enable(
         "method": "Fetch.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def fail_request(
@@ -251,7 +251,7 @@ def fail_request(
         "method": "Fetch.failRequest",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def fulfill_request(
@@ -287,7 +287,7 @@ def fulfill_request(
         "method": "Fetch.fulfillRequest",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def continue_request(
@@ -324,7 +324,7 @@ def continue_request(
         "method": "Fetch.continueRequest",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def continue_with_auth(
@@ -343,7 +343,7 @@ def continue_with_auth(
         "method": "Fetch.continueWithAuth",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def continue_response(
@@ -380,7 +380,7 @@ def continue_response(
         "method": "Fetch.continueResponse",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_response_body(

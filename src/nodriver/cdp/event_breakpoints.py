@@ -7,11 +7,9 @@
 
 from __future__ import annotations
 
-import enum
 import typing
-from dataclasses import dataclass
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 def set_instrumentation_breakpoint(
@@ -28,7 +26,7 @@ def set_instrumentation_breakpoint(
         "method": "EventBreakpoints.setInstrumentationBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_instrumentation_breakpoint(
@@ -45,7 +43,7 @@ def remove_instrumentation_breakpoint(
         "method": "EventBreakpoints.removeInstrumentationBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -55,4 +53,4 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "EventBreakpoints.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict

@@ -228,7 +228,7 @@ def trigger(
         "method": "Autofill.trigger",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_addresses(
@@ -245,7 +245,7 @@ def set_addresses(
         "method": "Autofill.setAddresses",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -255,7 +255,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Autofill.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -265,7 +265,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Autofill.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Autofill.addressFormFilled")

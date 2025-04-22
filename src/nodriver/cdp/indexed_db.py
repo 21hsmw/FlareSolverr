@@ -7,12 +7,11 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
 from . import runtime, storage
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 @dataclass
@@ -317,7 +316,7 @@ def clear_object_store(
         "method": "IndexedDB.clearObjectStore",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_database(
@@ -346,7 +345,7 @@ def delete_database(
         "method": "IndexedDB.deleteDatabase",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_object_store_entries(
@@ -381,7 +380,7 @@ def delete_object_store_entries(
         "method": "IndexedDB.deleteObjectStoreEntries",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -391,7 +390,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "IndexedDB.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -401,7 +400,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "IndexedDB.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def request_data(

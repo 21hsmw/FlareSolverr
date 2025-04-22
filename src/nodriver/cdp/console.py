@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -72,7 +71,7 @@ def clear_messages() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Console.clearMessages",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -82,7 +81,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Console.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -93,7 +92,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Console.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Console.messageAdded")

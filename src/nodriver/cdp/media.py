@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -198,7 +197,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Media.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -208,7 +207,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Media.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Media.playerPropertiesChanged")

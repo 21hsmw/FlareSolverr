@@ -1,26 +1,33 @@
 FROM python:3.11-slim-bookworm AS builder
 
-COPY requirements.txt .
+# Use BuildKit cache for apt
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt \
+    apt-get update \
+    && apt-get install -y --no-install-recommends equivs gcc python3-dev
 
 # Build dummy packages to skip installing them and their dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends equivs \
-    && equivs-control libgl1-mesa-dri \
+WORKDIR /dummy-pkgs
+RUN equivs-control libgl1-mesa-dri \
     && printf 'Section: misc\nPriority: optional\nStandards-Version: 3.9.2\nPackage: libgl1-mesa-dri\nVersion: 99.0.0\nDescription: Dummy package for libgl1-mesa-dri\n' >> libgl1-mesa-dri \
     && equivs-build libgl1-mesa-dri \
-    && mv libgl1-mesa-dri_*.deb /libgl1-mesa-dri.deb \
     && equivs-control adwaita-icon-theme \
     && printf 'Section: misc\nPriority: optional\nStandards-Version: 3.9.2\nPackage: adwaita-icon-theme\nVersion: 99.0.0\nDescription: Dummy package for adwaita-icon-theme\n' >> adwaita-icon-theme \
-    && equivs-build adwaita-icon-theme \
-    && mv adwaita-icon-theme_*.deb /adwaita-icon-theme.deb \
-    && apt-get install -y --no-install-recommends gcc python3-dev \
-    && pip install --no-cache-dir -r requirements.txt
+    && equivs-build adwaita-icon-theme
+
+# Copy requirements.txt first for better caching
+WORKDIR /app
+COPY requirements.txt .
+
+# Use BuildKit cache for pip
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
 
 FROM python:3.11-slim-bookworm
 
-# Copy dummy packages
-COPY --from=builder /*.deb /
+# Copy installed Python packages and dummy packages
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /dummy-pkgs/*.deb /tmp/
 
 # Install dependencies and create flaresolverr user
 # You can test Chromium running this command inside the container:
@@ -29,13 +36,14 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/pytho
 # To check the package versions available you can use this command:
 #    apt-cache madison chromium
 WORKDIR /app
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt \
     # Install dummy packages
-RUN dpkg -i /libgl1-mesa-dri.deb \
-    && dpkg -i /adwaita-icon-theme.deb \
+    dpkg -i /tmp/*.deb \
     # Install dependencies
     && apt-get update \
     && apt-get install -y --no-install-recommends chromium chromium-common chromium-driver xvfb dumb-init \
-        procps curl vim xauth \
+       procps curl vim xauth \
     # Remove temporary files and hardware decoding libraries
     && rm -rf /var/lib/apt/lists/* \
     && rm -f /usr/lib/x86_64-linux-gnu/libmfxhw* \

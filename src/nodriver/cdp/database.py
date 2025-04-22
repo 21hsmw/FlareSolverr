@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -99,7 +98,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Database.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -109,10 +108,12 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Database.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def execute_sql(database_id: DatabaseId, query: str) -> typing.Generator[
+def execute_sql(
+    database_id: DatabaseId, query: str
+) -> typing.Generator[
     T_JSON_DICT,
     T_JSON_DICT,
     typing.Tuple[

@@ -9,7 +9,6 @@ from typing import (
     Any,
     Callable,
     Generator,
-    Iterator,
     List,
     Optional,
     Set,
@@ -163,7 +162,7 @@ def deconstruct_browser():
             try:
                 if _.config and not _.config.uses_custom_data_dir:
                     shutil.rmtree(_.config.user_data_dir, ignore_errors=False)
-            except FileNotFoundError as e:
+            except FileNotFoundError:
                 break
             except (PermissionError, OSError) as e:
                 if attempt == 4:
@@ -230,7 +229,7 @@ def filter_recurse(doc: T, predicate: Callable[[cdp.dom.Node, Element], bool]) -
 
 
 def flatten_frame_tree(
-    tree: Union[cdp.page.FrameResourceTree, cdp.page.FrameTree]
+    tree: Union[cdp.page.FrameResourceTree, cdp.page.FrameTree],
 ) -> Generator[cdp.page.Frame, None, None]:
     yield tree.frame
     if tree.child_frames:

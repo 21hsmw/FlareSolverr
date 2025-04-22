@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -138,31 +137,28 @@ def add_inspected_heap_object(
         "method": "HeapProfiler.addInspectedHeapObject",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def collect_garbage() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "HeapProfiler.collectGarbage",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "HeapProfiler.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "HeapProfiler.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_heap_object_id(
@@ -202,9 +198,9 @@ def get_object_by_heap_object_id(
     return runtime.RemoteObject.from_json(json["result"])
 
 
-def get_sampling_profile() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingHeapProfile]
-):
+def get_sampling_profile() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, SamplingHeapProfile
+]:
     """
 
 
@@ -242,7 +238,7 @@ def start_sampling(
         "method": "HeapProfiler.startSampling",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_tracking_heap_objects(
@@ -258,7 +254,7 @@ def start_tracking_heap_objects(
         "method": "HeapProfiler.startTrackingHeapObjects",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_sampling() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingHeapProfile]:
@@ -299,7 +295,7 @@ def stop_tracking_heap_objects(
         "method": "HeapProfiler.stopTrackingHeapObjects",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def take_heap_snapshot(
@@ -327,7 +323,7 @@ def take_heap_snapshot(
         "method": "HeapProfiler.takeHeapSnapshot",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("HeapProfiler.addHeapSnapshotChunk")
@@ -400,7 +396,6 @@ class ReportHeapSnapshotProgress:
 @event_class("HeapProfiler.resetProfiles")
 @dataclass
 class ResetProfiles:
-
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> ResetProfiles:
         return cls()

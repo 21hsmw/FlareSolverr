@@ -11,7 +11,7 @@ import enum
 import typing
 from dataclasses import dataclass
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class CentralState(enum.Enum):
@@ -158,7 +158,7 @@ def enable(state: CentralState) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, No
         "method": "BluetoothEmulation.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -168,7 +168,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "BluetoothEmulation.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def simulate_preconnected_peripheral(
@@ -195,7 +195,7 @@ def simulate_preconnected_peripheral(
         "method": "BluetoothEmulation.simulatePreconnectedPeripheral",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def simulate_advertisement(
@@ -213,4 +213,4 @@ def simulate_advertisement(
         "method": "BluetoothEmulation.simulateAdvertisement",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict

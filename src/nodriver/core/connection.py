@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import collections
-import functools
 import inspect
 import itertools
 import json
@@ -30,12 +29,10 @@ logger = logging.getLogger(__name__)
 
 class ProtocolException(Exception):
     def __init__(self, *args, **kwargs):  # real signature unknown
-
         self.message = None
         self.code = None
         self.args = args
         if isinstance(args[0], dict):
-
             self.message = args[0].get("message", None)  # noqa
             self.code = args[0].get("code", None)
 
@@ -88,7 +85,6 @@ class Transaction(asyncio.Future):
 
     @property
     def message(self):
-
         return json.dumps({"method": self.method, "params": self.params, "id": self.id})
 
     @property
@@ -442,7 +438,6 @@ class Connection(metaclass=CantTouchThis):
         domain is enabled in the protocol.
 
         """
-        seen = []
         # save a copy of current enabled domains in a variable
         # domains will be removed from this variable
         # if it is still needed according to the set handlers
@@ -490,7 +485,6 @@ class Connection(metaclass=CantTouchThis):
             self.enabled_domains.remove(ed)
 
     async def _prepare_headless(self):
-
         if getattr(self, "_prep_headless_done", None):
             return
         response, error = await self._send_oneshot(
@@ -532,7 +526,6 @@ class Connection(metaclass=CantTouchThis):
         setattr(self, "_prep_expert_done", True)
 
     async def _send_oneshot(self, cdp_obj):
-
         tx = Transaction(cdp_obj)
         tx.connection = self
         tx.id = -2
@@ -593,7 +586,6 @@ class Listener:
         return True
 
     async def listener_loop(self):
-
         while True:
             try:
                 msg = await asyncio.wait_for(

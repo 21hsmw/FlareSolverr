@@ -1068,7 +1068,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1078,7 +1078,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_highlight_object_for_test(
@@ -1161,7 +1161,7 @@ def hide_highlight() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.hideHighlight",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -1192,7 +1192,7 @@ def highlight_frame(
         "method": "Overlay.highlightFrame",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_node(
@@ -1226,7 +1226,7 @@ def highlight_node(
         "method": "Overlay.highlightNode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_quad(
@@ -1251,7 +1251,7 @@ def highlight_quad(
         "method": "Overlay.highlightQuad",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_rect(
@@ -1285,7 +1285,7 @@ def highlight_rect(
         "method": "Overlay.highlightRect",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_source_order(
@@ -1315,7 +1315,7 @@ def highlight_source_order(
         "method": "Overlay.highlightSourceOrder",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_inspect_mode(
@@ -1336,7 +1336,7 @@ def set_inspect_mode(
         "method": "Overlay.setInspectMode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_ad_highlights(
@@ -1353,7 +1353,7 @@ def set_show_ad_highlights(
         "method": "Overlay.setShowAdHighlights",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_paused_in_debugger_message(
@@ -1369,7 +1369,7 @@ def set_paused_in_debugger_message(
         "method": "Overlay.setPausedInDebuggerMessage",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_debug_borders(
@@ -1386,7 +1386,7 @@ def set_show_debug_borders(
         "method": "Overlay.setShowDebugBorders",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_fps_counter(
@@ -1403,7 +1403,7 @@ def set_show_fps_counter(
         "method": "Overlay.setShowFPSCounter",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_grid_overlays(
@@ -1422,7 +1422,7 @@ def set_show_grid_overlays(
         "method": "Overlay.setShowGridOverlays",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_flex_overlays(
@@ -1439,7 +1439,7 @@ def set_show_flex_overlays(
         "method": "Overlay.setShowFlexOverlays",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_scroll_snap_overlays(
@@ -1456,7 +1456,7 @@ def set_show_scroll_snap_overlays(
         "method": "Overlay.setShowScrollSnapOverlays",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_container_query_overlays(
@@ -1473,7 +1473,7 @@ def set_show_container_query_overlays(
         "method": "Overlay.setShowContainerQueryOverlays",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_paint_rects(
@@ -1490,7 +1490,7 @@ def set_show_paint_rects(
         "method": "Overlay.setShowPaintRects",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_layout_shift_regions(
@@ -1507,7 +1507,7 @@ def set_show_layout_shift_regions(
         "method": "Overlay.setShowLayoutShiftRegions",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_scroll_bottleneck_rects(
@@ -1524,7 +1524,7 @@ def set_show_scroll_bottleneck_rects(
         "method": "Overlay.setShowScrollBottleneckRects",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -1544,7 +1544,7 @@ def set_show_hit_test_borders(
         "method": "Overlay.setShowHitTestBorders",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -1562,7 +1562,7 @@ def set_show_web_vitals(show: bool) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "Overlay.setShowWebVitals",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_viewport_size_on_resize(
@@ -1579,7 +1579,7 @@ def set_show_viewport_size_on_resize(
         "method": "Overlay.setShowViewportSizeOnResize",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_hinge(
@@ -1597,7 +1597,7 @@ def set_show_hinge(
         "method": "Overlay.setShowHinge",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_isolated_elements(
@@ -1616,7 +1616,7 @@ def set_show_isolated_elements(
         "method": "Overlay.setShowIsolatedElements",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_show_window_controls_overlay(
@@ -1634,7 +1634,7 @@ def set_show_window_controls_overlay(
         "method": "Overlay.setShowWindowControlsOverlay",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Overlay.inspectNodeRequested")

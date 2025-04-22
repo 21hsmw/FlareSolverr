@@ -7,23 +7,21 @@
 
 from __future__ import annotations
 
-import enum
 import typing
-from dataclasses import dataclass
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
-def clear_device_orientation_override() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def clear_device_orientation_override() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, None
+]:
     """
     Clears the overridden Device Orientation.
     """
     cmd_dict: T_JSON_DICT = {
         "method": "DeviceOrientation.clearDeviceOrientationOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_device_orientation_override(
@@ -44,4 +42,4 @@ def set_device_orientation_override(
         "method": "DeviceOrientation.setDeviceOrientationOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict

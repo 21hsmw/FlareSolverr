@@ -1784,7 +1784,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "CSS.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1795,7 +1795,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "CSS.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def force_pseudo_state(
@@ -1815,7 +1815,7 @@ def force_pseudo_state(
         "method": "CSS.forcePseudoState",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_background_colors(
@@ -2041,9 +2041,9 @@ def get_matched_styles_for_node(
     )
 
 
-def get_media_queries() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[CSSMedia]]
-):
+def get_media_queries() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[CSSMedia]
+]:
     """
     Returns all media queries parsed by the rendering engine.
 
@@ -2165,7 +2165,7 @@ def track_computed_style_updates_for_node(
         "method": "CSS.trackComputedStyleUpdatesForNode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def track_computed_style_updates(
@@ -2189,12 +2189,12 @@ def track_computed_style_updates(
         "method": "CSS.trackComputedStyleUpdates",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def take_computed_style_updates() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[dom.NodeId]]
-):
+def take_computed_style_updates() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[dom.NodeId]
+]:
     """
     Polls the next batch of computed style updates.
 
@@ -2228,7 +2228,7 @@ def set_effective_property_value_for_node(
         "method": "CSS.setEffectivePropertyValueForNode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_property_rule_property_name(
@@ -2455,12 +2455,12 @@ def start_rule_usage_tracking() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, No
     cmd_dict: T_JSON_DICT = {
         "method": "CSS.startRuleUsageTracking",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def stop_rule_usage_tracking() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[RuleUsage]]
-):
+def stop_rule_usage_tracking() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[RuleUsage]
+]:
     """
     Stop tracking rule usage and return the list of rules that were used since last call to
     ``takeCoverageDelta`` (or since start of coverage instrumentation).
@@ -2474,11 +2474,9 @@ def stop_rule_usage_tracking() -> (
     return [RuleUsage.from_json(i) for i in json["ruleUsage"]]
 
 
-def take_coverage_delta() -> (
-    typing.Generator[
-        T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[RuleUsage], float]
-    ]
-):
+def take_coverage_delta() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[RuleUsage], float]
+]:
     """
     Obtain list of rules that became used since last call to this method (or since start of coverage
     instrumentation).
@@ -2514,7 +2512,7 @@ def set_local_fonts_enabled(
         "method": "CSS.setLocalFontsEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("CSS.fontsUpdated")

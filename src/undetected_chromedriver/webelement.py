@@ -1,6 +1,5 @@
 from typing import List
 
-from selenium.webdriver.common.by import By
 import selenium.webdriver.remote.webelement
 
 

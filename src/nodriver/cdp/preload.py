@@ -472,19 +472,17 @@ class PrerenderMismatchedHeaders:
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "Preload.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "Preload.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Preload.ruleSetUpdated")

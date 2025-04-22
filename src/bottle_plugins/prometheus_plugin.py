@@ -6,8 +6,8 @@ from bottle import request
 from dtos import V1RequestBase, V1ResponseBase
 from metrics import start_metrics_http_server, REQUEST_COUNTER, REQUEST_DURATION
 
-PROMETHEUS_ENABLED = os.environ.get('PROMETHEUS_ENABLED', 'false').lower() == 'true'
-PROMETHEUS_PORT = int(os.environ.get('PROMETHEUS_PORT', 8192))
+PROMETHEUS_ENABLED = os.environ.get("PROMETHEUS_ENABLED", "false").lower() == "true"
+PROMETHEUS_PORT = int(os.environ.get("PROMETHEUS_PORT", 8192))
 
 
 def setup():
@@ -20,6 +20,7 @@ def prometheus_plugin(callback):
     Bottle plugin to expose Prometheus metrics
     http://bottlepy.org/docs/dev/plugindev.html
     """
+
     def wrapper(*args, **kwargs):
         actual_response = callback(*args, **kwargs)
 

@@ -84,7 +84,7 @@ if __name__ == "__main__":
     os.environ["SSL_CERT_FILE"] = certifi.where()
 
     # validate configuration
-    log_level = os.environ.get("LOG_LEVEL", "info").upper()
+    log_level = os.environ.get("LOG_LEVEL", "debug").upper()
     log_html = utils.get_config_log_html()
     headless = utils.get_config_headless()
     server_host = os.environ.get("HOST", "0.0.0.0")

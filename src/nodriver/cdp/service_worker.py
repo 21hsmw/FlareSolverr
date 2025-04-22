@@ -227,15 +227,14 @@ def deliver_push_message(
         "method": "ServiceWorker.deliverPushMessage",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "ServiceWorker.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispatch_sync_event(
@@ -256,7 +255,7 @@ def dispatch_sync_event(
         "method": "ServiceWorker.dispatchSyncEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispatch_periodic_sync_event(
@@ -275,15 +274,14 @@ def dispatch_periodic_sync_event(
         "method": "ServiceWorker.dispatchPeriodicSyncEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "ServiceWorker.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def inspect_worker(version_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -296,7 +294,7 @@ def inspect_worker(version_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "ServiceWorker.inspectWorker",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_force_update_on_page_load(
@@ -311,7 +309,7 @@ def set_force_update_on_page_load(
         "method": "ServiceWorker.setForceUpdateOnPageLoad",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def skip_waiting(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -324,7 +322,7 @@ def skip_waiting(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "ServiceWorker.skipWaiting",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_worker(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -337,15 +335,14 @@ def start_worker(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "ServiceWorker.startWorker",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_all_workers() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "ServiceWorker.stopAllWorkers",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_worker(version_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -358,7 +355,7 @@ def stop_worker(version_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "ServiceWorker.stopWorker",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def unregister(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -371,7 +368,7 @@ def unregister(scope_url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, Non
         "method": "ServiceWorker.unregister",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def update_registration(
@@ -386,7 +383,7 @@ def update_registration(
         "method": "ServiceWorker.updateRegistration",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("ServiceWorker.workerErrorReported")

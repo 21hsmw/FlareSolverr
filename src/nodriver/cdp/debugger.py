@@ -420,7 +420,7 @@ def continue_to_location(
         "method": "Debugger.continueToLocation",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -430,7 +430,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Debugger.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable(
@@ -682,7 +682,7 @@ def pause() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Debugger.pause",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -704,7 +704,7 @@ def pause_on_async_call(
         "method": "Debugger.pauseOnAsyncCall",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_breakpoint(
@@ -721,7 +721,7 @@ def remove_breakpoint(
         "method": "Debugger.removeBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def restart_frame(
@@ -797,7 +797,7 @@ def resume(
         "method": "Debugger.resume",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def search_in_content(
@@ -844,7 +844,7 @@ def set_async_call_stack_depth(
         "method": "Debugger.setAsyncCallStackDepth",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_blackbox_execution_contexts(
@@ -865,7 +865,7 @@ def set_blackbox_execution_contexts(
         "method": "Debugger.setBlackboxExecutionContexts",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_blackbox_patterns(
@@ -889,7 +889,7 @@ def set_blackbox_patterns(
         "method": "Debugger.setBlackboxPatterns",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_blackboxed_ranges(
@@ -913,7 +913,7 @@ def set_blackboxed_ranges(
         "method": "Debugger.setBlackboxedRanges",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_breakpoint(
@@ -1053,7 +1053,7 @@ def set_breakpoints_active(
         "method": "Debugger.setBreakpointsActive",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_pause_on_exceptions(
@@ -1071,7 +1071,7 @@ def set_pause_on_exceptions(
         "method": "Debugger.setPauseOnExceptions",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_return_value(
@@ -1090,7 +1090,7 @@ def set_return_value(
         "method": "Debugger.setReturnValue",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_script_source(
@@ -1186,7 +1186,7 @@ def set_skip_all_pauses(skip: bool) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "Debugger.setSkipAllPauses",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_variable_value(
@@ -1213,7 +1213,7 @@ def set_variable_value(
         "method": "Debugger.setVariableValue",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def step_into(
@@ -1235,7 +1235,7 @@ def step_into(
         "method": "Debugger.stepInto",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def step_out() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1245,7 +1245,7 @@ def step_out() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Debugger.stepOut",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def step_over(
@@ -1263,7 +1263,7 @@ def step_over(
         "method": "Debugger.stepOver",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Debugger.breakpointResolved")

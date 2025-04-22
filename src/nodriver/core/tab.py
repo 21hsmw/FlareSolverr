@@ -207,7 +207,6 @@ class Tab(Connection):
         *args,
         **kwargs,
     ):
-
         if type(event) is cdp.runtime.ExecutionContextCreated:
             context = event.context
             frame_id = context.aux_data.get("frameId")
@@ -433,7 +432,7 @@ class Tab(Connection):
 
         while not items:
             await self
-            results = await self.find_elements_by_text(text)
+            await self.find_elements_by_text(text)
             if loop.time() - now > timeout:
                 return items
             await self.sleep(0.5)
@@ -1052,8 +1051,7 @@ class Tab(Connection):
         return window_id, bounds
 
     async def get_content(
-        self,
-        _node: Optional[Union[cdp.dom.Node, element.Element]] = None
+        self, _node: Optional[Union[cdp.dom.Node, element.Element]] = None
     ):
         """
         gets the current page source content (html)
@@ -1671,7 +1669,6 @@ class Tab(Connection):
             )
             return
         try:
-
             if template_img:
                 template_img = Path(template_img)
                 if not template_img.exists():
@@ -1899,9 +1896,7 @@ class Tab(Connection):
     
                 setTimeout( () => document.getElementById('{1:s}').remove(), {2:d});
     
-            """.format(
-                style, secrets.token_hex(8), int(duration * 1000)
-            )
+            """.format(style, secrets.token_hex(8), int(duration * 1000))
             .replace("  ", "")
             .replace("\n", "")
         )
@@ -1961,7 +1956,6 @@ class TargetTransaction(Transaction):
 
 
 class TargetSession:
-
     def __init__(self, tab: Tab):
         self._tab = tab
         self._browser = tab.browser

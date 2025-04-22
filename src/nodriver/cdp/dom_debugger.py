@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from deprecated.sphinx import deprecated  # type: ignore
 
 from . import dom, runtime
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class DOMBreakpointType(enum.Enum):
@@ -174,7 +174,7 @@ def remove_dom_breakpoint(
         "method": "DOMDebugger.removeDOMBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_event_listener_breakpoint(
@@ -194,7 +194,7 @@ def remove_event_listener_breakpoint(
         "method": "DOMDebugger.removeEventListenerBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -216,7 +216,7 @@ def remove_instrumentation_breakpoint(
         "method": "DOMDebugger.removeInstrumentationBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_xhr_breakpoint(url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -231,7 +231,7 @@ def remove_xhr_breakpoint(url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "DOMDebugger.removeXHRBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_break_on_csp_violation(
@@ -250,7 +250,7 @@ def set_break_on_csp_violation(
         "method": "DOMDebugger.setBreakOnCSPViolation",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_dom_breakpoint(
@@ -269,7 +269,7 @@ def set_dom_breakpoint(
         "method": "DOMDebugger.setDOMBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_event_listener_breakpoint(
@@ -289,7 +289,7 @@ def set_event_listener_breakpoint(
         "method": "DOMDebugger.setEventListenerBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -311,7 +311,7 @@ def set_instrumentation_breakpoint(
         "method": "DOMDebugger.setInstrumentationBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_xhr_breakpoint(url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -326,4 +326,4 @@ def set_xhr_breakpoint(url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "DOMDebugger.setXHRBreakpoint",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict

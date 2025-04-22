@@ -13,9 +13,7 @@ def error_plugin(callback):
             actual_response = callback(*args, **kwargs)
         except Exception as e:
             logging.error(str(e))
-            actual_response = {
-                "error": str(e)
-            }
+            actual_response = {"error": str(e)}
             response.status = 500
         return actual_response
 

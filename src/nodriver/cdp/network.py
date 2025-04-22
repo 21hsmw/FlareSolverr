@@ -2840,12 +2840,12 @@ def set_accepted_encodings(
         "method": "Network.setAcceptedEncodings",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def clear_accepted_encodings_override() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def clear_accepted_encodings_override() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, None
+]:
     """
     Clears accepted encodings set by setAcceptedEncodings
 
@@ -2854,7 +2854,7 @@ def clear_accepted_encodings_override() -> (
     cmd_dict: T_JSON_DICT = {
         "method": "Network.clearAcceptedEncodingsOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -2890,9 +2890,9 @@ def can_clear_browser_cookies() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, bo
 
 
 @deprecated(version="1.3")
-def can_emulate_network_conditions() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, bool]
-):
+def can_emulate_network_conditions() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, bool
+]:
     """
     Tells whether emulation of network conditions is supported.
 
@@ -2914,7 +2914,7 @@ def clear_browser_cache() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Network.clearBrowserCache",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_browser_cookies() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -2924,7 +2924,7 @@ def clear_browser_cookies() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Network.clearBrowserCookies",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -2978,7 +2978,7 @@ def continue_intercepted_request(
         "method": "Network.continueInterceptedRequest",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_cookies(
@@ -3011,7 +3011,7 @@ def delete_cookies(
         "method": "Network.deleteCookies",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3021,7 +3021,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Network.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def emulate_network_conditions(
@@ -3063,7 +3063,7 @@ def emulate_network_conditions(
         "method": "Network.emulateNetworkConditions",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable(
@@ -3089,13 +3089,13 @@ def enable(
         "method": "Network.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
-def get_all_cookies() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[Cookie]]
-):
+def get_all_cookies() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[Cookie]
+]:
     """
     Returns all browser cookies. Depending on the backend support, will return detailed cookie
     information in the ``cookies`` field.
@@ -3261,7 +3261,7 @@ def replay_xhr(
         "method": "Network.replayXHR",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def search_in_response_body(
@@ -3312,7 +3312,7 @@ def set_blocked_ur_ls(
         "method": "Network.setBlockedURLs",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_bypass_service_worker(
@@ -3329,7 +3329,7 @@ def set_bypass_service_worker(
         "method": "Network.setBypassServiceWorker",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_cache_disabled(
@@ -3346,7 +3346,7 @@ def set_cache_disabled(
         "method": "Network.setCacheDisabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_cookie(
@@ -3433,7 +3433,7 @@ def set_cookies(
         "method": "Network.setCookies",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_extra_http_headers(
@@ -3450,7 +3450,7 @@ def set_extra_http_headers(
         "method": "Network.setExtraHTTPHeaders",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_attach_debug_stack(
@@ -3469,7 +3469,7 @@ def set_attach_debug_stack(
         "method": "Network.setAttachDebugStack",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -3492,7 +3492,7 @@ def set_request_interception(
         "method": "Network.setRequestInterception",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_user_agent_override(
@@ -3521,7 +3521,7 @@ def set_user_agent_override(
         "method": "Network.setUserAgentOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stream_resource_content(
@@ -3585,7 +3585,7 @@ def enable_reporting_api(
         "method": "Network.enableReportingApi",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def load_network_resource(

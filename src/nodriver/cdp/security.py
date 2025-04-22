@@ -410,7 +410,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Security.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -420,7 +420,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Security.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_ignore_certificate_errors(
@@ -437,7 +437,7 @@ def set_ignore_certificate_errors(
         "method": "Security.setIgnoreCertificateErrors",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -459,7 +459,7 @@ def handle_certificate_error(
         "method": "Security.handleCertificateError",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -480,7 +480,7 @@ def set_override_certificate_errors(
         "method": "Security.setOverrideCertificateErrors",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")

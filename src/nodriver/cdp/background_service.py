@@ -131,7 +131,7 @@ def start_observing(
         "method": "BackgroundService.startObserving",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_observing(
@@ -148,7 +148,7 @@ def stop_observing(
         "method": "BackgroundService.stopObserving",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_recording(
@@ -167,7 +167,7 @@ def set_recording(
         "method": "BackgroundService.setRecording",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_events(
@@ -184,7 +184,7 @@ def clear_events(
         "method": "BackgroundService.clearEvents",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("BackgroundService.recordingStateChanged")

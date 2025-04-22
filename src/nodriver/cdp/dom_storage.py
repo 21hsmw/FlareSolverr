@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -93,7 +92,7 @@ def clear(storage_id: StorageId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "DOMStorage.clear",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -103,7 +102,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOMStorage.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -113,7 +112,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOMStorage.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_dom_storage_items(
@@ -147,7 +146,7 @@ def remove_dom_storage_item(
         "method": "DOMStorage.removeDOMStorageItem",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_dom_storage_item(
@@ -166,7 +165,7 @@ def set_dom_storage_item(
         "method": "DOMStorage.setDOMStorageItem",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("DOMStorage.domStorageItemAdded")

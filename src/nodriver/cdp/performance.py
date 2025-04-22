@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -49,7 +48,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Performance.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable(
@@ -67,7 +66,7 @@ def enable(
         "method": "Performance.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -91,7 +90,7 @@ def set_time_domain(
         "method": "Performance.setTimeDomain",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_metrics() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[Metric]]:

@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -207,7 +206,7 @@ def enable(
         "method": "PerformanceTimeline.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("PerformanceTimeline.timelineEventAdded")

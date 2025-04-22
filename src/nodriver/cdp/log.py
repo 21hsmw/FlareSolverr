@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -149,7 +148,7 @@ def clear() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Log.clear",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -159,7 +158,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Log.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -170,7 +169,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Log.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_violations_report(
@@ -187,7 +186,7 @@ def start_violations_report(
         "method": "Log.startViolationsReport",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_violations_report() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -197,7 +196,7 @@ def stop_violations_report() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
     cmd_dict: T_JSON_DICT = {
         "method": "Log.stopViolationsReport",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Log.entryAdded")

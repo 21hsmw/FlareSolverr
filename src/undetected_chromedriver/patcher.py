@@ -6,7 +6,6 @@ import json
 import logging
 import os
 import pathlib
-import platform
 import random
 import re
 import shutil
@@ -67,7 +66,7 @@ class Patcher(object):
             version_main_int = int(version_main)
             # check if version_main_int is less than or equal to e.g 114
             self.is_old_chromedriver = version_main and version_main_int <= 114
-        except (ValueError,TypeError):
+        except (ValueError, TypeError):
             # If the conversion fails, print an error message
             print("version_main cannot be converted to an integer")
             # Set self.is_old_chromedriver to False if the conversion fails
@@ -81,9 +80,7 @@ class Patcher(object):
 
         if not executable_path:
             if sys.platform.startswith("freebsd"):
-                self.executable_path = os.path.join(
-                    self.data_path, self.exe_name
-                )
+                self.executable_path = os.path.join(self.data_path, self.exe_name)
             else:
                 self.executable_path = os.path.join(
                     self.data_path, "_".join([prefix, self.exe_name])
@@ -174,23 +171,26 @@ class Patcher(object):
         if force is True:
             self.force = force
 
-
         if self.platform_name == "freebsd":
             chromedriver_path = shutil.which("chromedriver")
 
-            if not os.path.isfile(chromedriver_path) or not os.access(chromedriver_path, os.X_OK):
+            if not os.path.isfile(chromedriver_path) or not os.access(
+                chromedriver_path, os.X_OK
+            ):
                 logging.error("Chromedriver not installed!")
                 return
 
-            version_path = os.path.join(os.path.dirname(self.executable_path), "version.txt")
+            version_path = os.path.join(
+                os.path.dirname(self.executable_path), "version.txt"
+            )
 
             process = os.popen(f'"{chromedriver_path}" --version')
-            chromedriver_version = process.read().split(' ')[1].split(' ')[0]
+            chromedriver_version = process.read().split(" ")[1].split(" ")[0]
             process.close()
 
             current_version = None
             if os.path.isfile(version_path) or os.access(version_path, os.X_OK):
-                with open(version_path, 'r') as f:
+                with open(version_path, "r") as f:
                     current_version = f.read()
 
             if current_version != chromedriver_version:
@@ -198,7 +198,7 @@ class Patcher(object):
                 shutil.copy(chromedriver_path, self.executable_path)
                 os.chmod(self.executable_path, 0o755)
 
-                with open(version_path, 'w') as f:
+                with open(version_path, "w") as f:
                     f.write(chromedriver_version)
 
                 logging.info("Chromedriver executable copied!")
@@ -245,7 +245,6 @@ class Patcher(object):
             with open(p, mode="a+b") as fs:
                 exc = []
                 try:
-
                     fs.seek(0, 0)
                 except PermissionError as e:
                     exc.append(e)  # since some systems apprently allow seeking
@@ -256,11 +255,10 @@ class Patcher(object):
                     exc.append(e)
 
                 if exc:
-
                     return True
                 return False
             # ok safe to assume this is in use
-        except Exception as e:
+        except Exception:
             # logger.exception("whoops ", e)
             pass
 
@@ -328,7 +326,9 @@ class Patcher(object):
             download_url = "%s/%s/%s" % (self.url_repo, self.version_full, zip_name)
         else:
             zip_name = zip_name.replace("_", "-", 1)
-            download_url = "https://storage.googleapis.com/chrome-for-testing-public/%s/%s/%s"
+            download_url = (
+                "https://storage.googleapis.com/chrome-for-testing-public/%s/%s/%s"
+            )
             download_url %= (self.version_full, self.platform_name, zip_name)
 
         logger.debug("downloading from %s" % download_url)
@@ -433,7 +433,8 @@ class Patcher(object):
         else:
             timeout = 3  # stop trying after this many seconds
             t = time.monotonic()
-            now = lambda: time.monotonic()
+            def now():
+                return time.monotonic()
             while now() - t > timeout:
                 # we don't want to wait until the end of time
                 try:

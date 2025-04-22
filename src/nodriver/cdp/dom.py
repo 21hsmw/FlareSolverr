@@ -848,7 +848,7 @@ def scroll_into_view_if_needed(
         "method": "DOM.scrollIntoViewIfNeeded",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -858,7 +858,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def discard_search_results(
@@ -878,7 +878,7 @@ def discard_search_results(
         "method": "DOM.discardSearchResults",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable(
@@ -896,7 +896,7 @@ def enable(
         "method": "DOM.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def focus(
@@ -922,7 +922,7 @@ def focus(
         "method": "DOM.focus",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_attributes(
@@ -1212,7 +1212,7 @@ def hide_highlight() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.hideHighlight",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_node() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1222,7 +1222,7 @@ def highlight_node() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.highlightNode",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def highlight_rect() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1232,7 +1232,7 @@ def highlight_rect() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.highlightRect",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def mark_undoable_state() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1244,7 +1244,7 @@ def mark_undoable_state() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.markUndoableState",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def move_to(
@@ -1385,9 +1385,9 @@ def query_selector_all(
     return [NodeId.from_json(i) for i in json["nodeIds"]]
 
 
-def get_top_layer_elements() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[NodeId]]
-):
+def get_top_layer_elements() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[NodeId]
+]:
     """
     Returns NodeIds of current top layer elements.
     Top layer is rendered closest to the user within a viewport, therefore its elements always
@@ -1436,7 +1436,7 @@ def redo() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.redo",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_attribute(
@@ -1455,7 +1455,7 @@ def remove_attribute(
         "method": "DOM.removeAttribute",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_node(node_id: NodeId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1470,7 +1470,7 @@ def remove_node(node_id: NodeId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "DOM.removeNode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def request_child_nodes(
@@ -1497,7 +1497,7 @@ def request_child_nodes(
         "method": "DOM.requestChildNodes",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def request_node(
@@ -1571,7 +1571,7 @@ def set_attribute_value(
         "method": "DOM.setAttributeValue",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_attributes_as_text(
@@ -1594,7 +1594,7 @@ def set_attributes_as_text(
         "method": "DOM.setAttributesAsText",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_file_input_files(
@@ -1623,7 +1623,7 @@ def set_file_input_files(
         "method": "DOM.setFileInputFiles",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_node_stack_traces_enabled(
@@ -1642,7 +1642,7 @@ def set_node_stack_traces_enabled(
         "method": "DOM.setNodeStackTracesEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_node_stack_traces(
@@ -1692,9 +1692,9 @@ def get_file_info(
     return str(json["path"])
 
 
-def get_detached_dom_nodes() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[DetachedElementInfo]]
-):
+def get_detached_dom_nodes() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[DetachedElementInfo]
+]:
     """
     Returns list of detached nodes
 
@@ -1726,7 +1726,7 @@ def set_inspected_node(
         "method": "DOM.setInspectedNode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_node_name(
@@ -1766,7 +1766,7 @@ def set_node_value(
         "method": "DOM.setNodeValue",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_outer_html(
@@ -1785,7 +1785,7 @@ def set_outer_html(
         "method": "DOM.setOuterHTML",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def undo() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1797,7 +1797,7 @@ def undo() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DOM.undo",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_frame_owner(

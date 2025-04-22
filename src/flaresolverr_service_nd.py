@@ -304,7 +304,7 @@ async def _evil_logic_nd(
     if req.cookies is not None and len(req.cookies) > 0:
         await tab.wait(1)
         await tab
-        logging.debug(f"Setting cookies...")
+        logging.debug("Setting cookies...")
 
         # Get cleaned domain
         domain = (urlparse(req.url).netloc).split(".")
@@ -460,9 +460,7 @@ async def _evil_logic_nd(
     challenge_res.userAgent = await utils.get_user_agent_nd(driver)
 
     if not req.returnOnlyCookies:
-        challenge_res.headers = (
-            {}
-        )  # TO-DO: nodriver should support this, let's add it later
+        challenge_res.headers = {}  # TO-DO: nodriver should support this, let's add it later
         challenge_res.response = await tab.get_content(_node=doc)
 
     # Close websocket connection

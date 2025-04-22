@@ -162,15 +162,14 @@ def enable(
         "method": "FedCm.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "FedCm.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def select_account(
@@ -187,7 +186,7 @@ def select_account(
         "method": "FedCm.selectAccount",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def click_dialog_button(
@@ -204,7 +203,7 @@ def click_dialog_button(
         "method": "FedCm.clickDialogButton",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def open_url(
@@ -223,7 +222,7 @@ def open_url(
         "method": "FedCm.openUrl",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dismiss_dialog(
@@ -241,7 +240,7 @@ def dismiss_dialog(
         "method": "FedCm.dismissDialog",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def reset_cooldown() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -252,7 +251,7 @@ def reset_cooldown() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "FedCm.resetCooldown",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("FedCm.dialogShown")

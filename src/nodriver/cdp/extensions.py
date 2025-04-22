@@ -9,9 +9,8 @@ from __future__ import annotations
 
 import enum
 import typing
-from dataclasses import dataclass
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class StorageArea(enum.Enum):
@@ -96,7 +95,7 @@ def remove_storage_items(
         "method": "Extensions.removeStorageItems",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_storage_items(
@@ -115,7 +114,7 @@ def clear_storage_items(
         "method": "Extensions.clearStorageItems",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_storage_items(
@@ -137,4 +136,4 @@ def set_storage_items(
         "method": "Extensions.setStorageItems",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict

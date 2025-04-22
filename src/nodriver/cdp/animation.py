@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -305,7 +304,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Animation.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -315,7 +314,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Animation.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_current_time(id_: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, float]:
@@ -362,7 +361,7 @@ def release_animations(
         "method": "Animation.releaseAnimations",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def resolve_animation(
@@ -400,7 +399,7 @@ def seek_animations(
         "method": "Animation.seekAnimations",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_paused(
@@ -419,7 +418,7 @@ def set_paused(
         "method": "Animation.setPaused",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_playback_rate(
@@ -436,7 +435,7 @@ def set_playback_rate(
         "method": "Animation.setPlaybackRate",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_timing(
@@ -457,7 +456,7 @@ def set_timing(
         "method": "Animation.setTiming",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Animation.animationCanceled")

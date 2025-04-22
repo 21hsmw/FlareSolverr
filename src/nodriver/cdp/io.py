@@ -7,12 +7,10 @@
 
 from __future__ import annotations
 
-import enum
 import typing
-from dataclasses import dataclass
 
 from . import runtime
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class StreamHandle(str):
@@ -44,7 +42,7 @@ def close(handle: StreamHandle) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, No
         "method": "IO.close",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def read(

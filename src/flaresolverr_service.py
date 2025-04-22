@@ -10,41 +10,56 @@ from selenium.common import TimeoutException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import (
-    presence_of_element_located, staleness_of, title_is)
+    presence_of_element_located,
+    staleness_of,
+    title_is,
+)
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 
 import utils
-from dtos import (STATUS_ERROR, STATUS_OK, ChallengeResolutionResultT,
-                  ChallengeResolutionT, HealthResponse, IndexResponse,
-                  V1RequestBase, V1ResponseBase)
+from dtos import (
+    STATUS_ERROR,
+    STATUS_OK,
+    ChallengeResolutionResultT,
+    ChallengeResolutionT,
+    HealthResponse,
+    IndexResponse,
+    V1RequestBase,
+    V1ResponseBase,
+)
 from sessions import SessionsStorage
 
 ACCESS_DENIED_TITLES = [
     # Cloudflare
-    'Access denied',
+    "Access denied",
     # Cloudflare http://bitturk.net/ Firefox
-    'Attention Required! | Cloudflare'
+    "Attention Required! | Cloudflare",
 ]
 ACCESS_DENIED_SELECTORS = [
     # Cloudflare
-    'div.cf-error-title span.cf-code-label span',
+    "div.cf-error-title span.cf-code-label span",
     # Cloudflare http://bitturk.net/ Firefox
-    '#cf-error-details div.cf-error-overview h1'
+    "#cf-error-details div.cf-error-overview h1",
 ]
 CHALLENGE_TITLES = [
     # Cloudflare
-    'Just a moment...',
+    "Just a moment...",
     # DDoS-GUARD
-    'DDoS-Guard'
+    "DDoS-Guard",
 ]
 CHALLENGE_SELECTORS = [
     # Cloudflare
-    '#cf-challenge-running', '.ray_id', '.attack-box', '#cf-please-wait', '#challenge-spinner', '#trk_jschal_js',
+    "#cf-challenge-running",
+    ".ray_id",
+    ".attack-box",
+    "#cf-please-wait",
+    "#challenge-spinner",
+    "#trk_jschal_js",
     # Custom CloudFlare for EbookParadijs, Film-Paleis, MuziekFabriek and Puur-Hollands
-    'td.info #js_info',
+    "td.info #js_info",
     # Fairlane / pararius.com
-    'div.vc div.text-box h2'
+    "div.vc div.text-box h2",
 ]
 SHORT_TIMEOUT = 1
 SESSIONS_STORAGE = SessionsStorage()
@@ -62,7 +77,7 @@ def test_browser_installation_uc():
         logging.info("Chrome / Chromium path: " + chrome_exe_path)
 
     chrome_major_version = utils.get_chrome_major_version()
-    if chrome_major_version == '':
+    if chrome_major_version == "":
         logging.error("Chrome / Chromium version not detected!")
         sys.exit(1)
     else:
@@ -124,15 +139,15 @@ def _controller_v1_handler(req: V1RequestBase) -> V1ResponseBase:
 
     # execute the command
     res: V1ResponseBase
-    if req.cmd == 'sessions.create':
+    if req.cmd == "sessions.create":
         res = _cmd_sessions_create(req)
-    elif req.cmd == 'sessions.list':
+    elif req.cmd == "sessions.list":
         res = _cmd_sessions_list(req)
-    elif req.cmd == 'sessions.destroy':
+    elif req.cmd == "sessions.destroy":
         res = _cmd_sessions_destroy(req)
-    elif req.cmd == 'request.get':
+    elif req.cmd == "request.get":
         res = _cmd_request_get(req)
-    elif req.cmd == 'request.post':
+    elif req.cmd == "request.post":
         res = _cmd_request_post(req)
     else:
         raise Exception(f"Request parameter 'cmd' = '{req.cmd}' is invalid.")
@@ -143,15 +158,19 @@ def _controller_v1_handler(req: V1RequestBase) -> V1ResponseBase:
 def _cmd_request_get(req: V1RequestBase) -> V1ResponseBase:
     # do some validations
     if req.url is None:
-        raise Exception("Request parameter 'url' is mandatory in 'request.get' command.")
+        raise Exception(
+            "Request parameter 'url' is mandatory in 'request.get' command."
+        )
     if req.postData is not None:
         raise Exception("Cannot use 'postBody' when sending a GET request.")
     if req.returnRawHtml is not None:
-        logging.warning("Request parameter 'returnRawHtml' was removed in FlareSolverr v2.")
+        logging.warning(
+            "Request parameter 'returnRawHtml' was removed in FlareSolverr v2."
+        )
     if req.download is not None:
         logging.warning("Request parameter 'download' was removed in FlareSolverr v2.")
 
-    challenge_res = _resolve_challenge(req, 'GET')
+    challenge_res = _resolve_challenge(req, "GET")
     res = V1ResponseBase({})
     res.status = challenge_res.status
     res.message = challenge_res.message
@@ -162,13 +181,17 @@ def _cmd_request_get(req: V1RequestBase) -> V1ResponseBase:
 def _cmd_request_post(req: V1RequestBase) -> V1ResponseBase:
     # do some validations
     if req.postData is None:
-        raise Exception("Request parameter 'postData' is mandatory in 'request.post' command.")
+        raise Exception(
+            "Request parameter 'postData' is mandatory in 'request.post' command."
+        )
     if req.returnRawHtml is not None:
-        logging.warning("Request parameter 'returnRawHtml' was removed in FlareSolverr v2.")
+        logging.warning(
+            "Request parameter 'returnRawHtml' was removed in FlareSolverr v2."
+        )
     if req.download is not None:
         logging.warning("Request parameter 'download' was removed in FlareSolverr v2.")
 
-    challenge_res = _resolve_challenge(req, 'POST')
+    challenge_res = _resolve_challenge(req, "POST")
     res = V1ResponseBase({})
     res.status = challenge_res.status
     res.message = challenge_res.message
@@ -183,27 +206,27 @@ def _cmd_sessions_create(req: V1RequestBase) -> V1ResponseBase:
     session_id = session.session_id
 
     if not fresh:
-        return V1ResponseBase({
-            "status": STATUS_OK,
-            "message": "Session already exists.",
-            "session": session_id
-        })
+        return V1ResponseBase(
+            {
+                "status": STATUS_OK,
+                "message": "Session already exists.",
+                "session": session_id,
+            }
+        )
 
-    return V1ResponseBase({
-        "status": STATUS_OK,
-        "message": "Session created successfully.",
-        "session": session_id
-    })
+    return V1ResponseBase(
+        {
+            "status": STATUS_OK,
+            "message": "Session created successfully.",
+            "session": session_id,
+        }
+    )
 
 
 def _cmd_sessions_list(req: V1RequestBase) -> V1ResponseBase:
     session_ids = SESSIONS_STORAGE.session_ids()
 
-    return V1ResponseBase({
-        "status": STATUS_OK,
-        "message": "",
-        "sessions": session_ids
-    })
+    return V1ResponseBase({"status": STATUS_OK, "message": "", "sessions": session_ids})
 
 
 def _cmd_sessions_destroy(req: V1RequestBase) -> V1ResponseBase:
@@ -213,10 +236,9 @@ def _cmd_sessions_destroy(req: V1RequestBase) -> V1ResponseBase:
     if not existed:
         raise Exception("The session doesn't exist.")
 
-    return V1ResponseBase({
-        "status": STATUS_OK,
-        "message": "The session has been removed."
-    })
+    return V1ResponseBase(
+        {"status": STATUS_OK, "message": "The session has been removed."}
+    )
 
 
 def _resolve_challenge(req: V1RequestBase, method: str) -> ChallengeResolutionT:
@@ -225,36 +247,50 @@ def _resolve_challenge(req: V1RequestBase, method: str) -> ChallengeResolutionT:
     try:
         if req.session:
             session_id = req.session
-            ttl = timedelta(minutes=req.session_ttl_minutes) if req.session_ttl_minutes else None
+            ttl = (
+                timedelta(minutes=req.session_ttl_minutes)
+                if req.session_ttl_minutes
+                else None
+            )
             session, fresh = SESSIONS_STORAGE.get(session_id, ttl)
 
             if fresh:
-                logging.debug(f"new session created to perform the request (session_id={session_id})")
+                logging.debug(
+                    f"new session created to perform the request (session_id={session_id})"
+                )
             else:
-                logging.debug(f"existing session is used to perform the request (session_id={session_id}, "
-                              f"lifetime={str(session.lifetime())}, ttl={str(ttl)})")
+                logging.debug(
+                    f"existing session is used to perform the request (session_id={session_id}, "
+                    f"lifetime={str(session.lifetime())}, ttl={str(ttl)})"
+                )
 
             driver = session.driver
         else:
             driver = utils.get_webdriver_uc(req.proxy)
-            logging.debug('New instance of webdriver has been created to perform the request')
+            logging.debug(
+                "New instance of webdriver has been created to perform the request"
+            )
         return func_timeout(timeout, _evil_logic, (req, driver, method))
     except FunctionTimedOut:
-        raise Exception(f'Error solving the challenge. Timeout after {timeout} seconds.')
+        raise Exception(
+            f"Error solving the challenge. Timeout after {timeout} seconds."
+        )
     except Exception as e:
-        raise Exception('Error solving the challenge. ' + str(e).replace('\n', '\\n'))
+        raise Exception("Error solving the challenge. " + str(e).replace("\n", "\\n"))
     finally:
         if not req.session and driver is not None:
             if utils.PLATFORM_VERSION == "nt":
                 driver.close()
             driver.quit()
-            logging.debug('A used instance of webdriver has been destroyed')
+            logging.debug("A used instance of webdriver has been destroyed")
 
 
 def click_verify(driver: WebDriver):
     try:
         logging.debug("Try to find the Cloudflare verify checkbox...")
-        iframe = driver.find_element(By.XPATH, "//iframe[starts-with(@id, 'cf-chl-widget-')]")
+        iframe = driver.find_element(
+            By.XPATH, "//iframe[starts-with(@id, 'cf-chl-widget-')]"
+        )
         driver.switch_to.frame(iframe)
         checkbox = driver.find_element(
             by=By.XPATH,
@@ -282,9 +318,13 @@ def click_verify(driver: WebDriver):
             actions.move_to_element_with_offset(button, 5, 7)
             actions.click(button)
             actions.perform()
-            logging.debug("The Cloudflare 'Verify you are human' button found and clicked!")
+            logging.debug(
+                "The Cloudflare 'Verify you are human' button found and clicked!"
+            )
     except Exception:
-        logging.debug("The Cloudflare 'Verify you are human' button not found on the page.")
+        logging.debug(
+            "The Cloudflare 'Verify you are human' button not found on the page."
+        )
 
     time.sleep(2)
 
@@ -298,6 +338,7 @@ def get_correct_window(driver: WebDriver) -> WebDriver:
                 return driver
     return driver
 
+
 def switch_to_new_tab(driver: WebDriver, url: str) -> None:
     logging.debug("Opening new tab...")
     driver.execute_script(f"window.open('{url}', 'new tab')")
@@ -305,21 +346,23 @@ def switch_to_new_tab(driver: WebDriver, url: str) -> None:
     logging.debug("Closing original tab...")
     driver.close()
 
+
 def access_page(driver: WebDriver, url: str) -> None:
     driver.get(url)
     driver.start_session()
     driver.start_session()  # required to bypass Cloudflare
 
 
-def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> ChallengeResolutionT:
+def _evil_logic(
+    req: V1RequestBase, driver: WebDriver, method: str
+) -> ChallengeResolutionT:
     res = ChallengeResolutionT({})
     res.status = STATUS_OK
     res.message = ""
 
-
     # navigate to the page
-    logging.debug(f'Navigating to... {req.url}')
-    if method == 'POST':
+    logging.debug(f"Navigating to... {req.url}")
+    if method == "POST":
         _post_request(req, driver)
     else:
         access_page(driver, req.url)
@@ -327,12 +370,12 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
 
     # set cookies if required
     if req.cookies is not None and len(req.cookies) > 0:
-        logging.debug(f'Setting cookies...')
+        logging.debug("Setting cookies...")
         for cookie in req.cookies:
-            driver.delete_cookie(cookie['name'])
+            driver.delete_cookie(cookie["name"])
             driver.add_cookie(cookie)
         # reload the page
-        if method == 'POST':
+        if method == "POST":
             _post_request(req, driver)
         else:
             access_page(driver, req.url)
@@ -347,14 +390,18 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
     # find access denied titles
     for title in ACCESS_DENIED_TITLES:
         if title == page_title:
-            raise Exception('Cloudflare has blocked this request. '
-                            'Probably your IP is banned for this site, check in your web browser.')
+            raise Exception(
+                "Cloudflare has blocked this request. "
+                "Probably your IP is banned for this site, check in your web browser."
+            )
     # find access denied selectors
     for selector in ACCESS_DENIED_SELECTORS:
         found_elements = driver.find_elements(By.CSS_SELECTOR, selector)
         if len(found_elements) > 0:
-            raise Exception('Cloudflare has blocked this request. '
-                            'Probably your IP is banned for this site, check in your web browser.')
+            raise Exception(
+                "Cloudflare has blocked this request. "
+                "Probably your IP is banned for this site, check in your web browser."
+            )
 
     # find challenge by title
     challenge_found = False
@@ -385,14 +432,22 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
 
                 # wait until the title changes
                 for title in CHALLENGE_TITLES:
-                    logging.debug("Waiting for title (attempt " + str(attempt) + "): " + title)
+                    logging.debug(
+                        "Waiting for title (attempt " + str(attempt) + "): " + title
+                    )
                     WebDriverWait(driver, SHORT_TIMEOUT).until_not(title_is(title))
 
                 # then wait until all the selectors disappear
                 for selector in CHALLENGE_SELECTORS:
-                    logging.debug("Waiting for selector (attempt " + str(attempt) + "): " + selector)
+                    logging.debug(
+                        "Waiting for selector (attempt "
+                        + str(attempt)
+                        + "): "
+                        + selector
+                    )
                     WebDriverWait(driver, SHORT_TIMEOUT).until_not(
-                        presence_of_element_located((By.CSS_SELECTOR, selector)))
+                        presence_of_element_located((By.CSS_SELECTOR, selector))
+                    )
 
                 # all elements not found
                 break
@@ -435,16 +490,16 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
 
 def _post_request(req: V1RequestBase, driver: WebDriver):
     post_form = f'<form id="hackForm" action="{req.url}" method="POST">'
-    query_string = req.postData if req.postData[0] != '?' else req.postData[1:]
-    pairs = query_string.split('&')
+    query_string = req.postData if req.postData[0] != "?" else req.postData[1:]
+    pairs = query_string.split("&")
     for pair in pairs:
-        parts = pair.split('=')
+        parts = pair.split("=")
         # noinspection PyBroadException
         try:
             name = unquote(parts[0])
         except Exception:
             name = parts[0]
-        if name == 'submit':
+        if name == "submit":
             continue
         # noinspection PyBroadException
         try:
@@ -452,7 +507,7 @@ def _post_request(req: V1RequestBase, driver: WebDriver):
         except Exception:
             value = parts[1]
         post_form += f'<input type="text" name="{name}" value="{value}"><br>'
-    post_form += '</form>'
+    post_form += "</form>"
     html_content = f"""
         <!DOCTYPE html>
         <html>

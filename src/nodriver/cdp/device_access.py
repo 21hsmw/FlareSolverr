@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -78,7 +77,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DeviceAccess.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -88,7 +87,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "DeviceAccess.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def select_prompt(
@@ -107,7 +106,7 @@ def select_prompt(
         "method": "DeviceAccess.selectPrompt",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def cancel_prompt(id_: RequestId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -122,7 +121,7 @@ def cancel_prompt(id_: RequestId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, 
         "method": "DeviceAccess.cancelPrompt",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("DeviceAccess.deviceRequestPrompted")

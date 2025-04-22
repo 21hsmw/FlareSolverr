@@ -14,6 +14,7 @@ Y88b.    888  888 888    Y88..88P 888  888  888 Y8b.     Y88b 888 888     888  Y
 by UltrafunkAmsterdam (https://github.com/ultrafunkamsterdam)
 
 """
+
 from __future__ import annotations
 
 
@@ -300,7 +301,6 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
 
         # see if a custom user profile is specified in options
         for arg in options.arguments:
-
             if any([_ in arg for _ in ("--headless", "headless")]):
                 options.arguments.remove(arg)
                 options.headless = True
@@ -374,17 +374,22 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
                 browser_executable_path or find_chrome_executable()
             )
 
-        if not options.binary_location or not \
-                pathlib.Path(options.binary_location).exists():
-                raise FileNotFoundError(
-                    "\n---------------------\n"
-                    "Could not determine browser executable."
-                    "\n---------------------\n"
-                    "Make sure your browser is installed in the default location (path).\n"
-                    "If you are sure about the browser executable, you can specify it using\n"
-                    "the `browser_executable_path='{}` parameter.\n\n"
-                    .format("/path/to/browser/executable" if IS_POSIX else "c:/path/to/your/browser.exe")
+        if (
+            not options.binary_location
+            or not pathlib.Path(options.binary_location).exists()
+        ):
+            raise FileNotFoundError(
+                "\n---------------------\n"
+                "Could not determine browser executable."
+                "\n---------------------\n"
+                "Make sure your browser is installed in the default location (path).\n"
+                "If you are sure about the browser executable, you can specify it using\n"
+                "the `browser_executable_path='{}` parameter.\n\n".format(
+                    "/path/to/browser/executable"
+                    if IS_POSIX
+                    else "c:/path/to/your/browser.exe"
                 )
+            )
 
         self._delay = 3
 
@@ -396,17 +401,21 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
         if no_sandbox:
             options.arguments.extend(["--no-sandbox", "--test-type"])
 
-        if headless or getattr(options, 'headless', None):
-            #workaround until a better checking is found
+        if headless or getattr(options, "headless", None):
+            # workaround until a better checking is found
             try:
-                v_main = int(self.patcher.version_main) if self.patcher.version_main else 108
+                v_main = (
+                    int(self.patcher.version_main) if self.patcher.version_main else 108
+                )
                 if v_main < 108:
                     options.add_argument("--headless=chrome")
                 elif v_main >= 108:
                     options.add_argument("--headless=new")
             except:
-                logger.warning("could not detect version_main."
-                               "therefore, we are assuming it is chrome 108 or higher")
+                logger.warning(
+                    "could not detect version_main."
+                    "therefore, we are assuming it is chrome 108 or higher"
+                )
                 options.add_argument("--headless=new")
 
         options.add_argument("--window-size=1920,1080")
@@ -438,7 +447,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
                 json.dump(config, fs)
                 fs.truncate()  # the file might be shorter
                 logger.debug("fixed exit_type flag")
-        except Exception as e:
+        except Exception:
             logger.debug("did not find a bad exit_type flag ")
 
         self.options = options
@@ -452,7 +461,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
             )
         else:
             startupinfo = None
-            if os.name == 'nt' and windows_headless:
+            if os.name == "nt" and windows_headless:
                 # STARTUPINFO() is Windows only
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -462,10 +471,9 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 close_fds=IS_POSIX,
-                startupinfo=startupinfo
+                startupinfo=startupinfo,
             )
             self.browser_pid = browser.pid
-
 
         service = selenium.webdriver.chromium.service.ChromiumService(
             self.patcher.executable_path
@@ -493,7 +501,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
         else:
             self._web_element_cls = WebElement
 
-        if headless or getattr(options, 'headless', None):
+        if headless or getattr(options, "headless", None):
             self._configure_headless()
 
     def _configure_headless(self):
@@ -747,6 +755,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
             value: str
         Returns: Generator[webelement.WebElement]
         """
+
         def search_frame(f=None):
             if not f:
                 # ensure we are on main content frame
@@ -762,7 +771,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
         for elem in search_frame():
             yield elem
         # get iframes
-        frames = self.find_elements('css selector', 'iframe')
+        frames = self.find_elements("css selector", "iframe")
 
         # search per frame
         for f in frames:
@@ -903,12 +912,10 @@ def find_chrome_executable():
             ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA", "PROGRAMW6432"),
         ):
             if item is not None:
-                for subitem in (
-                    "Google/Chrome/Application",
-                ):
+                for subitem in ("Google/Chrome/Application",):
                     candidates.add(os.sep.join((item, subitem, "chrome.exe")))
     for candidate in candidates:
-        logger.debug('checking if %s exists and is executable' % candidate)
+        logger.debug("checking if %s exists and is executable" % candidate)
         if os.path.exists(candidate) and os.access(candidate, os.X_OK):
-            logger.debug('found! using %s' % candidate)
+            logger.debug("found! using %s" % candidate)
             return os.path.normpath(candidate)

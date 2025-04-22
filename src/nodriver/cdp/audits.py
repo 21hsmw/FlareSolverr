@@ -1869,7 +1869,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Audits.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1880,7 +1880,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Audits.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def check_contrast(
@@ -1899,12 +1899,12 @@ def check_contrast(
         "method": "Audits.checkContrast",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def check_forms_issues() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[GenericIssueDetails]]
-):
+def check_forms_issues() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[GenericIssueDetails]
+]:
     """
     Runs the form issues check for the target page. Found issues are reported
     using Audits.issueAdded event.

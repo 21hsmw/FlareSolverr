@@ -214,7 +214,7 @@ def end() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Tracing.end",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_categories() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[str]]:
@@ -248,7 +248,7 @@ def record_clock_sync_marker(
         "method": "Tracing.recordClockSyncMarker",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def request_memory_dump(
@@ -327,7 +327,7 @@ def start(
         "method": "Tracing.start",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Tracing.bufferUsage")

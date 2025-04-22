@@ -2246,7 +2246,7 @@ def bring_to_front() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.bringToFront",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def capture_screenshot(
@@ -2324,13 +2324,13 @@ def clear_device_metrics_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT
     cmd_dict: T_JSON_DICT = {
         "method": "Page.clearDeviceMetricsOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
-def clear_device_orientation_override() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def clear_device_orientation_override() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, None
+]:
     """
     Clears the overridden Device Orientation.
 
@@ -2341,7 +2341,7 @@ def clear_device_orientation_override() -> (
     cmd_dict: T_JSON_DICT = {
         "method": "Page.clearDeviceOrientationOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -2354,7 +2354,7 @@ def clear_geolocation_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
     cmd_dict: T_JSON_DICT = {
         "method": "Page.clearGeolocationOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def create_isolated_world(
@@ -2405,7 +2405,7 @@ def delete_cookie(
         "method": "Page.deleteCookie",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -2415,7 +2415,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -2425,7 +2425,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_app_manifest(
@@ -2478,9 +2478,9 @@ def get_app_manifest(
     )
 
 
-def get_installability_errors() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[InstallabilityError]]
-):
+def get_installability_errors() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[InstallabilityError]
+]:
     """
 
 
@@ -2496,9 +2496,9 @@ def get_installability_errors() -> (
 
 
 @deprecated(version="1.3")
-def get_manifest_icons() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Optional[str]]
-):
+def get_manifest_icons() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Optional[str]
+]:
     """
     Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation.
 
@@ -2623,11 +2623,9 @@ def get_layout_metrics() -> typing.Generator[
     )
 
 
-def get_navigation_history() -> (
-    typing.Generator[
-        T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[NavigationEntry]]
-    ]
-):
+def get_navigation_history() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[NavigationEntry]]
+]:
     """
     Returns navigation history for the current page.
 
@@ -2653,7 +2651,7 @@ def reset_navigation_history() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, Non
     cmd_dict: T_JSON_DICT = {
         "method": "Page.resetNavigationHistory",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_resource_content(
@@ -2682,9 +2680,9 @@ def get_resource_content(
     return (str(json["content"]), bool(json["base64Encoded"]))
 
 
-def get_resource_tree() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, FrameResourceTree]
-):
+def get_resource_tree() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, FrameResourceTree
+]:
     """
     Returns present frame / resource tree structure.
 
@@ -2716,7 +2714,7 @@ def handle_java_script_dialog(
         "method": "Page.handleJavaScriptDialog",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def navigate(
@@ -2784,7 +2782,7 @@ def navigate_to_history_entry(
         "method": "Page.navigateToHistoryEntry",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def print_to_pdf(
@@ -2906,7 +2904,7 @@ def reload(
         "method": "Page.reload",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -2928,7 +2926,7 @@ def remove_script_to_evaluate_on_load(
         "method": "Page.removeScriptToEvaluateOnLoad",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_script_to_evaluate_on_new_document(
@@ -2945,7 +2943,7 @@ def remove_script_to_evaluate_on_new_document(
         "method": "Page.removeScriptToEvaluateOnNewDocument",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def screencast_frame_ack(
@@ -2964,7 +2962,7 @@ def screencast_frame_ack(
         "method": "Page.screencastFrameAck",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def search_in_resource(
@@ -3018,7 +3016,7 @@ def set_ad_blocking_enabled(
         "method": "Page.setAdBlockingEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_bypass_csp(enabled: bool) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3033,7 +3031,7 @@ def set_bypass_csp(enabled: bool) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, 
         "method": "Page.setBypassCSP",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_permissions_policy_state(
@@ -3142,7 +3140,7 @@ def set_device_metrics_override(
         "method": "Page.setDeviceMetricsOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -3168,7 +3166,7 @@ def set_device_orientation_override(
         "method": "Page.setDeviceOrientationOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_font_families(
@@ -3191,7 +3189,7 @@ def set_font_families(
         "method": "Page.setFontFamilies",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_font_sizes(
@@ -3210,7 +3208,7 @@ def set_font_sizes(
         "method": "Page.setFontSizes",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_document_content(
@@ -3229,7 +3227,7 @@ def set_document_content(
         "method": "Page.setDocumentContent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -3254,7 +3252,7 @@ def set_download_behavior(
         "method": "Page.setDownloadBehavior",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -3284,7 +3282,7 @@ def set_geolocation_override(
         "method": "Page.setGeolocationOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_lifecycle_events_enabled(
@@ -3301,7 +3299,7 @@ def set_lifecycle_events_enabled(
         "method": "Page.setLifecycleEventsEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -3326,7 +3324,7 @@ def set_touch_emulation_enabled(
         "method": "Page.setTouchEmulationEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_screencast(
@@ -3362,7 +3360,7 @@ def start_screencast(
         "method": "Page.startScreencast",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_loading() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3372,7 +3370,7 @@ def stop_loading() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.stopLoading",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def crash() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3384,7 +3382,7 @@ def crash() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.crash",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def close() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3394,7 +3392,7 @@ def close() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.close",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_web_lifecycle_state(
@@ -3415,7 +3413,7 @@ def set_web_lifecycle_state(
         "method": "Page.setWebLifecycleState",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_screencast() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3427,7 +3425,7 @@ def stop_screencast() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.stopScreencast",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def produce_compilation_cache(
@@ -3451,7 +3449,7 @@ def produce_compilation_cache(
         "method": "Page.produceCompilationCache",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def add_compilation_cache(
@@ -3473,7 +3471,7 @@ def add_compilation_cache(
         "method": "Page.addCompilationCache",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_compilation_cache() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3485,7 +3483,7 @@ def clear_compilation_cache() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None
     cmd_dict: T_JSON_DICT = {
         "method": "Page.clearCompilationCache",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_spc_transaction_mode(
@@ -3505,7 +3503,7 @@ def set_spc_transaction_mode(
         "method": "Page.setSPCTransactionMode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_rph_registration_mode(
@@ -3525,7 +3523,7 @@ def set_rph_registration_mode(
         "method": "Page.setRPHRegistrationMode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def generate_test_report(
@@ -3547,7 +3545,7 @@ def generate_test_report(
         "method": "Page.generateTestReport",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def wait_for_debugger() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -3559,7 +3557,7 @@ def wait_for_debugger() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Page.waitForDebugger",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_intercept_file_chooser_dialog(
@@ -3578,7 +3576,7 @@ def set_intercept_file_chooser_dialog(
         "method": "Page.setInterceptFileChooserDialog",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_prerendering_allowed(
@@ -3603,7 +3601,7 @@ def set_prerendering_allowed(
         "method": "Page.setPrerenderingAllowed",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Page.domContentEventFired")

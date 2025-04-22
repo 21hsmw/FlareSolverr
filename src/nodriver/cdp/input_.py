@@ -254,7 +254,7 @@ def dispatch_drag_event(
         "method": "Input.dispatchDragEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispatch_key_event(
@@ -327,7 +327,7 @@ def dispatch_key_event(
         "method": "Input.dispatchKeyEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def insert_text(text: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -345,7 +345,7 @@ def insert_text(text: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
         "method": "Input.insertText",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def ime_set_composition(
@@ -380,7 +380,7 @@ def ime_set_composition(
         "method": "Input.imeSetComposition",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispatch_mouse_event(
@@ -455,7 +455,7 @@ def dispatch_mouse_event(
         "method": "Input.dispatchMouseEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def dispatch_touch_event(
@@ -483,7 +483,7 @@ def dispatch_touch_event(
         "method": "Input.dispatchTouchEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def cancel_dragging() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -493,7 +493,7 @@ def cancel_dragging() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Input.cancelDragging",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def emulate_touch_from_mouse_event(
@@ -541,7 +541,7 @@ def emulate_touch_from_mouse_event(
         "method": "Input.emulateTouchFromMouseEvent",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_ignore_input_events(
@@ -558,7 +558,7 @@ def set_ignore_input_events(
         "method": "Input.setIgnoreInputEvents",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_intercept_drags(
@@ -578,7 +578,7 @@ def set_intercept_drags(
         "method": "Input.setInterceptDrags",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def synthesize_pinch_gesture(
@@ -611,7 +611,7 @@ def synthesize_pinch_gesture(
         "method": "Input.synthesizePinchGesture",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def synthesize_scroll_gesture(
@@ -673,7 +673,7 @@ def synthesize_scroll_gesture(
         "method": "Input.synthesizeScrollGesture",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def synthesize_tap_gesture(
@@ -707,7 +707,7 @@ def synthesize_tap_gesture(
         "method": "Input.synthesizeTapGesture",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Input.dragIntercepted")

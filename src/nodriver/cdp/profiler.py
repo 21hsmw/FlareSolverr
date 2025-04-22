@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -254,24 +253,22 @@ class ScriptCoverage:
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "Profiler.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "Profiler.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def get_best_effort_coverage() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[ScriptCoverage]]
-):
+def get_best_effort_coverage() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[ScriptCoverage]
+]:
     """
     Collect coverage data for the current isolate. The coverage data may be incomplete due to
     garbage collection.
@@ -299,15 +296,14 @@ def set_sampling_interval(
         "method": "Profiler.setSamplingInterval",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
-
     cmd_dict: T_JSON_DICT = {
         "method": "Profiler.start",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_precise_coverage(
@@ -361,14 +357,12 @@ def stop_precise_coverage() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Profiler.stopPreciseCoverage",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def take_precise_coverage() -> (
-    typing.Generator[
-        T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[ScriptCoverage], float]
-    ]
-):
+def take_precise_coverage() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[ScriptCoverage], float]
+]:
     """
     Collect coverage data for the current isolate, and resets execution counters. Precise code
     coverage needs to have started.

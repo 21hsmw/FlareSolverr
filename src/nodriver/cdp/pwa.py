@@ -12,7 +12,7 @@ import typing
 from dataclasses import dataclass
 
 from . import target
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 @dataclass
@@ -135,7 +135,7 @@ def install(
         "method": "PWA.install",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def uninstall(manifest_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -150,7 +150,7 @@ def uninstall(manifest_id: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, No
         "method": "PWA.uninstall",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def launch(
@@ -226,7 +226,7 @@ def open_current_page_in_app(
         "method": "PWA.openCurrentPageInApp",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def change_app_user_settings(
@@ -259,4 +259,4 @@ def change_app_user_settings(
         "method": "PWA.changeAppUserSettings",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict

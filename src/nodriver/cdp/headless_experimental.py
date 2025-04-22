@@ -7,13 +7,12 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
 from deprecated.sphinx import deprecated  # type: ignore
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 @dataclass
@@ -115,7 +114,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "HeadlessExperimental.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -128,4 +127,4 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "HeadlessExperimental.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict

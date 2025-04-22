@@ -342,7 +342,7 @@ def set_permission(
         "method": "Browser.setPermission",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def grant_permissions(
@@ -369,7 +369,7 @@ def grant_permissions(
         "method": "Browser.grantPermissions",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def reset_permissions(
@@ -387,7 +387,7 @@ def reset_permissions(
         "method": "Browser.resetPermissions",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_download_behavior(
@@ -418,7 +418,7 @@ def set_download_behavior(
         "method": "Browser.setDownloadBehavior",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def cancel_download(
@@ -440,7 +440,7 @@ def cancel_download(
         "method": "Browser.cancelDownload",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def close() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -450,7 +450,7 @@ def close() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Browser.close",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def crash() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -462,7 +462,7 @@ def crash() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Browser.crash",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def crash_gpu_process() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -474,12 +474,12 @@ def crash_gpu_process() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Browser.crashGpuProcess",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def get_version() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[str, str, str, str, str]]
-):
+def get_version() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[str, str, str, str, str]
+]:
     """
     Returns version information.
 
@@ -504,9 +504,9 @@ def get_version() -> (
     )
 
 
-def get_browser_command_line() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[str]]
-):
+def get_browser_command_line() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[str]
+]:
     """
     Returns the command line switches for the browser process if, and only if
     --enable-automation is on the commandline.
@@ -635,7 +635,7 @@ def set_window_bounds(
         "method": "Browser.setWindowBounds",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_dock_tile(
@@ -658,7 +658,7 @@ def set_dock_tile(
         "method": "Browser.setDockTile",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def execute_browser_command(
@@ -677,7 +677,7 @@ def execute_browser_command(
         "method": "Browser.executeBrowserCommand",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def add_privacy_sandbox_enrollment_override(
@@ -695,7 +695,7 @@ def add_privacy_sandbox_enrollment_override(
         "method": "Browser.addPrivacySandboxEnrollmentOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Browser.downloadWillBegin")

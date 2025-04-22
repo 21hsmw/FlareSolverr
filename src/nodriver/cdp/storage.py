@@ -1327,7 +1327,7 @@ def clear_data_for_origin(
         "method": "Storage.clearDataForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_data_for_storage_key(
@@ -1346,7 +1346,7 @@ def clear_data_for_storage_key(
         "method": "Storage.clearDataForStorageKey",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_cookies(
@@ -1387,7 +1387,7 @@ def set_cookies(
         "method": "Storage.setCookies",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_cookies(
@@ -1405,7 +1405,7 @@ def clear_cookies(
         "method": "Storage.clearCookies",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_usage_and_quota(
@@ -1460,7 +1460,7 @@ def override_quota_for_origin(
         "method": "Storage.overrideQuotaForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def track_cache_storage_for_origin(
@@ -1477,7 +1477,7 @@ def track_cache_storage_for_origin(
         "method": "Storage.trackCacheStorageForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def track_cache_storage_for_storage_key(
@@ -1494,7 +1494,7 @@ def track_cache_storage_for_storage_key(
         "method": "Storage.trackCacheStorageForStorageKey",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def track_indexed_db_for_origin(
@@ -1511,7 +1511,7 @@ def track_indexed_db_for_origin(
         "method": "Storage.trackIndexedDBForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def track_indexed_db_for_storage_key(
@@ -1528,7 +1528,7 @@ def track_indexed_db_for_storage_key(
         "method": "Storage.trackIndexedDBForStorageKey",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def untrack_cache_storage_for_origin(
@@ -1545,7 +1545,7 @@ def untrack_cache_storage_for_origin(
         "method": "Storage.untrackCacheStorageForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def untrack_cache_storage_for_storage_key(
@@ -1562,7 +1562,7 @@ def untrack_cache_storage_for_storage_key(
         "method": "Storage.untrackCacheStorageForStorageKey",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def untrack_indexed_db_for_origin(
@@ -1579,7 +1579,7 @@ def untrack_indexed_db_for_origin(
         "method": "Storage.untrackIndexedDBForOrigin",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def untrack_indexed_db_for_storage_key(
@@ -1596,12 +1596,12 @@ def untrack_indexed_db_for_storage_key(
         "method": "Storage.untrackIndexedDBForStorageKey",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def get_trust_tokens() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[TrustTokens]]
-):
+def get_trust_tokens() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[TrustTokens]
+]:
     """
     Returns the number of stored Trust Tokens per issuer for the
     current browsing context.
@@ -1678,7 +1678,7 @@ def set_interest_group_tracking(
         "method": "Storage.setInterestGroupTracking",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_interest_group_auction_tracking(
@@ -1698,7 +1698,7 @@ def set_interest_group_auction_tracking(
         "method": "Storage.setInterestGroupAuctionTracking",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_shared_storage_metadata(
@@ -1769,7 +1769,7 @@ def set_shared_storage_entry(
         "method": "Storage.setSharedStorageEntry",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_shared_storage_entry(
@@ -1790,7 +1790,7 @@ def delete_shared_storage_entry(
         "method": "Storage.deleteSharedStorageEntry",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_shared_storage_entries(
@@ -1809,7 +1809,7 @@ def clear_shared_storage_entries(
         "method": "Storage.clearSharedStorageEntries",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def reset_shared_storage_budget(
@@ -1828,7 +1828,7 @@ def reset_shared_storage_budget(
         "method": "Storage.resetSharedStorageBudget",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_shared_storage_tracking(
@@ -1847,7 +1847,7 @@ def set_shared_storage_tracking(
         "method": "Storage.setSharedStorageTracking",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_storage_bucket_tracking(
@@ -1868,7 +1868,7 @@ def set_storage_bucket_tracking(
         "method": "Storage.setStorageBucketTracking",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_storage_bucket(
@@ -1887,12 +1887,12 @@ def delete_storage_bucket(
         "method": "Storage.deleteStorageBucket",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def run_bounce_tracking_mitigations() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[str]]
-):
+def run_bounce_tracking_mitigations() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[str]
+]:
     """
     Deletes state for sites identified as potential bounce trackers, immediately.
 
@@ -1923,7 +1923,7 @@ def set_attribution_reporting_local_testing_mode(
         "method": "Storage.setAttributionReportingLocalTestingMode",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_attribution_reporting_tracking(
@@ -1942,12 +1942,12 @@ def set_attribution_reporting_tracking(
         "method": "Storage.setAttributionReportingTracking",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def send_pending_attribution_reports() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, int]
-):
+def send_pending_attribution_reports() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, int
+]:
     """
     Sends all pending Attribution Reports immediately, regardless of their
     scheduled report time.
@@ -1963,9 +1963,9 @@ def send_pending_attribution_reports() -> (
     return int(json["numSent"])
 
 
-def get_related_website_sets() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[RelatedWebsiteSet]]
-):
+def get_related_website_sets() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[RelatedWebsiteSet]
+]:
     """
     Returns the effective Related Website Sets in use by this profile for the browser
     session. The effective Related Website Sets will not change during a browser session.

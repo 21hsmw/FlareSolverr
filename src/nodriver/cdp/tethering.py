@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -26,7 +25,7 @@ def bind(port: int) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
         "method": "Tethering.bind",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def unbind(port: int) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -41,7 +40,7 @@ def unbind(port: int) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
         "method": "Tethering.unbind",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Tethering.accepted")

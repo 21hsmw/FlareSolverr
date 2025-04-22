@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -62,7 +61,7 @@ def enable(
         "method": "Cast.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -72,7 +71,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Cast.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_sink_to_use(sink_name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -88,7 +87,7 @@ def set_sink_to_use(sink_name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "Cast.setSinkToUse",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_desktop_mirroring(
@@ -105,7 +104,7 @@ def start_desktop_mirroring(
         "method": "Cast.startDesktopMirroring",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_tab_mirroring(
@@ -122,7 +121,7 @@ def start_tab_mirroring(
         "method": "Cast.startTabMirroring",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_casting(sink_name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -137,7 +136,7 @@ def stop_casting(sink_name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
         "method": "Cast.stopCasting",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Cast.sinksUpdated")

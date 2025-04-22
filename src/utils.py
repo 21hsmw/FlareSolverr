@@ -201,21 +201,17 @@ async def get_webdriver_nd(proxy: dict = None) -> nd.Browser:
     # options.add_argument('--no-zygote')
     # attempt to fix Docker ARM32 build
     # options.add_argument('--disable-gpu-sandbox')
-    options.add_argument('--disable-software-rasterizer')
-    options.add_argument('--disable-gpu')
-    options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--ignore-ssl-errors')
+    options.add_argument("--disable-software-rasterizer")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--ignore-certificate-errors")
+    options.add_argument("--ignore-ssl-errors")
     # fix GL errors in ASUSTOR NAS
     # https://github.com/FlareSolverr/FlareSolverr/issues/782
     # https://github.com/microsoft/vscode/issues/127800#issuecomment-873342069
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
     options.add_argument("--use-gl=swiftshader")
 
-    language = os.environ.get("LANG", None)
-    if language is not None:
-        options.lang = language
-    else:
-        options.lang = "en-US"
+    os.environ.get("LANG", None) or "en-US"
 
     # Fix for Chrome 117 | https://github.com/FlareSolverr/FlareSolverr/issues/910
     if USER_AGENT is not None:
@@ -286,7 +282,7 @@ def get_webdriver_uc(proxy: dict = None) -> WebDriver:
     # https://peter.sh/experiments/chromium-command-line-switches/#use-gl
     options.add_argument("--use-gl=swiftshader")
 
-    language = os.environ.get("LANG", None)
+    language = os.environ.get("LANG", None) or "en-US"
     if language is not None:
         options.add_argument("--accept-lang=%s" % language)
 

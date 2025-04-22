@@ -7,7 +7,6 @@ import logging
 import os
 import pathlib
 import pickle
-import typing
 import urllib.parse
 import urllib.request
 import warnings
@@ -334,7 +333,7 @@ class Browser:
         )
         if not connect_existing:
             startupinfo = None
-            if os.name == 'nt' and windows_headless:
+            if os.name == "nt" and windows_headless:
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
@@ -359,7 +358,9 @@ class Browser:
         self._http = HTTPApi((self.config.host, self.config.port))
         util.get_registered_instances().add(self)
         await asyncio.sleep(0.25)
-        logging.debug(f"Trying to connect to browser on address {self.config.host}:{self.config.port}")
+        logging.debug(
+            f"Trying to connect to browser on address {self.config.host}:{self.config.port}"
+        )
         for _ in range(20):
             try:
                 self.info = ContraDict(await self._http.get("version"), silent=True)
@@ -373,12 +374,21 @@ class Browser:
 
         if not self.info:
             import psutil
-            processes = [self._process] + psutil.Process(self._process.pid).children(recursive=True)
+
+            processes = [self._process] + psutil.Process(self._process.pid).children(
+                recursive=True
+            )
             for proc in processes:
                 try:
-                    logging.debug(f"Terminating browser process {proc.pid} after failure")
+                    logging.debug(
+                        f"Terminating browser process {proc.pid} after failure"
+                    )
                     proc.terminate()
-                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                except (
+                    psutil.NoSuchProcess,
+                    psutil.AccessDenied,
+                    psutil.ZombieProcess,
+                ):
                     pass
             util.get_registered_instances().remove(self)
 
@@ -503,7 +513,7 @@ class Browser:
         grid = []
         for x in range(req_cols):
             for y in range(req_rows):
-                num = x + y
+                x + y
                 try:
                     tabs = next(distinct_windows_iter)
                 except StopIteration:
@@ -530,8 +540,8 @@ class Browser:
     async def update_targets(self):
         targets: List[cdp.target.TargetInfo]
         targets = await self._get_targets()
-        target_ids = [t.target_id for t in targets]
-        existing_target_ids = [t.target_id for t in self.targets]
+        [t.target_id for t in targets]
+        [t.target_id for t in self.targets]
         for t in targets:
             for existing_tab in self.targets:
                 existing_target = existing_tab.target
@@ -554,7 +564,6 @@ class Browser:
         await asyncio.sleep(0)
 
     async def __aenter__(self):
-
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -842,7 +851,7 @@ class CookieJar:
             break
         else:
             connection = self._browser.connection
-        cookies = await connection.send(cdp.storage.get_cookies())
+        await connection.send(cdp.storage.get_cookies())
         await connection.send(cdp.storage.clear_cookies())
 
 

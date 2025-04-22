@@ -11,7 +11,7 @@ import enum
 import typing
 from dataclasses import dataclass
 
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class PressureLevel(enum.Enum):
@@ -149,9 +149,9 @@ class DOMCounter:
         )
 
 
-def get_dom_counters() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, int, int]]
-):
+def get_dom_counters() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, int, int]
+]:
     """
     Retruns current DOM object counters.
 
@@ -168,9 +168,9 @@ def get_dom_counters() -> (
     return (int(json["documents"]), int(json["nodes"]), int(json["jsEventListeners"]))
 
 
-def get_dom_counters_for_leak_detection() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[DOMCounter]]
-):
+def get_dom_counters_for_leak_detection() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[DOMCounter]
+]:
     """
     Retruns DOM object counters after preparing renderer for leak detection.
 
@@ -191,19 +191,19 @@ def prepare_for_leak_detection() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
     cmd_dict: T_JSON_DICT = {
         "method": "Memory.prepareForLeakDetection",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def forcibly_purge_java_script_memory() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def forcibly_purge_java_script_memory() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, None
+]:
     """
     Simulate OomIntervention by purging V8 memory.
     """
     cmd_dict: T_JSON_DICT = {
         "method": "Memory.forciblyPurgeJavaScriptMemory",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_pressure_notifications_suppressed(
@@ -220,7 +220,7 @@ def set_pressure_notifications_suppressed(
         "method": "Memory.setPressureNotificationsSuppressed",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def simulate_pressure_notification(
@@ -237,7 +237,7 @@ def simulate_pressure_notification(
         "method": "Memory.simulatePressureNotification",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def start_sampling(
@@ -259,7 +259,7 @@ def start_sampling(
         "method": "Memory.startSampling",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def stop_sampling() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -269,12 +269,12 @@ def stop_sampling() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Memory.stopSampling",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
-def get_all_time_sampling_profile() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingProfile]
-):
+def get_all_time_sampling_profile() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, SamplingProfile
+]:
     """
     Retrieve native memory allocations profile
     collected since renderer process startup.
@@ -288,9 +288,9 @@ def get_all_time_sampling_profile() -> (
     return SamplingProfile.from_json(json["profile"])
 
 
-def get_browser_sampling_profile() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingProfile]
-):
+def get_browser_sampling_profile() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, SamplingProfile
+]:
     """
     Retrieve native memory allocations profile
     collected since browser process startup.
@@ -304,9 +304,9 @@ def get_browser_sampling_profile() -> (
     return SamplingProfile.from_json(json["profile"])
 
 
-def get_sampling_profile() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingProfile]
-):
+def get_sampling_profile() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, SamplingProfile
+]:
     """
     Retrieve native memory allocations profile collected since last
     ``startSampling`` call.

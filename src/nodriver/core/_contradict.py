@@ -1,5 +1,4 @@
 import logging
-import re
 import warnings as _warnings
 from collections.abc import Mapping as _Mapping
 from collections.abc import Sequence as _Sequence

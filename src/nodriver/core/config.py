@@ -5,10 +5,8 @@ import secrets
 import sys
 import tempfile
 import zipfile
-from types import MethodType
 from typing import List, Optional, Union
 
-from ._contradict import ContraDict
 
 __all__ = [
     "Config",
@@ -162,7 +160,7 @@ class Config:
             raise FileNotFoundError("could not find anything here: %s" % str(path))
 
         if path.is_file():
-            tf = tempfile.mkdtemp(prefix=f"extension_", suffix=secrets.token_hex(4))
+            tf = tempfile.mkdtemp(prefix="extension_", suffix=secrets.token_hex(4))
             with zipfile.ZipFile(path, "r") as z:
                 z.extractall(tf)
                 self._extensions.append(tf)
@@ -272,10 +270,18 @@ def find_chrome_executable(return_all=False):
             ]
 
     else:
-        os.environ["flaresolverr_dir"] = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+        os.environ["flaresolverr_dir"] = os.path.abspath(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+        )
         for item in map(
             os.environ.get,
-            ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA", "PROGRAMW6432", "flaresolverr_dir"),
+            (
+                "PROGRAMFILES",
+                "PROGRAMFILES(X86)",
+                "LOCALAPPDATA",
+                "PROGRAMW6432",
+                "flaresolverr_dir",
+            ),
         ):
             if item is not None:
                 for subitem in (

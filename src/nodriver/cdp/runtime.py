@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-import enum
 import typing
 from dataclasses import dataclass
 
@@ -1154,7 +1153,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Runtime.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def discard_console_entries() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1164,7 +1163,7 @@ def discard_console_entries() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None
     cmd_dict: T_JSON_DICT = {
         "method": "Runtime.discardConsoleEntries",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1176,7 +1175,7 @@ def enable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Runtime.enable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def evaluate(
@@ -1287,9 +1286,9 @@ def get_isolate_id() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, str]:
     return str(json["id"])
 
 
-def get_heap_usage() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[float, float]]
-):
+def get_heap_usage() -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.Tuple[float, float]
+]:
     """
     Returns the JavaScript heap usage.
     It is the total usage of the corresponding isolate not scoped to a particular Runtime.
@@ -1432,7 +1431,7 @@ def release_object(
         "method": "Runtime.releaseObject",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def release_object_group(
@@ -1449,7 +1448,7 @@ def release_object_group(
         "method": "Runtime.releaseObjectGroup",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def run_if_waiting_for_debugger() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1459,7 +1458,7 @@ def run_if_waiting_for_debugger() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, 
     cmd_dict: T_JSON_DICT = {
         "method": "Runtime.runIfWaitingForDebugger",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def run_script(
@@ -1537,7 +1536,7 @@ def set_async_call_stack_depth(
         "method": "Runtime.setAsyncCallStackDepth",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_custom_object_formatter_enabled(
@@ -1556,7 +1555,7 @@ def set_custom_object_formatter_enabled(
         "method": "Runtime.setCustomObjectFormatterEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_max_call_stack_size_to_capture(
@@ -1575,7 +1574,7 @@ def set_max_call_stack_size_to_capture(
         "method": "Runtime.setMaxCallStackSizeToCapture",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def terminate_execution() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1588,7 +1587,7 @@ def terminate_execution() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Runtime.terminateExecution",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def add_binding(
@@ -1618,7 +1617,7 @@ def add_binding(
         "method": "Runtime.addBinding",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_binding(name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -1634,7 +1633,7 @@ def remove_binding(name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None
         "method": "Runtime.removeBinding",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_exception_details(

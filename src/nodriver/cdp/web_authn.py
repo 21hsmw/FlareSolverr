@@ -331,7 +331,7 @@ def enable(
         "method": "WebAuthn.enable",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -341,7 +341,7 @@ def disable() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "WebAuthn.disable",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def add_virtual_authenticator(
@@ -389,7 +389,7 @@ def set_response_override_bits(
         "method": "WebAuthn.setResponseOverrideBits",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def remove_virtual_authenticator(
@@ -406,7 +406,7 @@ def remove_virtual_authenticator(
         "method": "WebAuthn.removeVirtualAuthenticator",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def add_credential(
@@ -425,7 +425,7 @@ def add_credential(
         "method": "WebAuthn.addCredential",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_credential(
@@ -485,7 +485,7 @@ def remove_credential(
         "method": "WebAuthn.removeCredential",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_credentials(
@@ -502,7 +502,7 @@ def clear_credentials(
         "method": "WebAuthn.clearCredentials",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_user_verified(
@@ -522,7 +522,7 @@ def set_user_verified(
         "method": "WebAuthn.setUserVerified",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_automatic_presence_simulation(
@@ -542,7 +542,7 @@ def set_automatic_presence_simulation(
         "method": "WebAuthn.setAutomaticPresenceSimulation",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_credential_properties(
@@ -571,7 +571,7 @@ def set_credential_properties(
         "method": "WebAuthn.setCredentialProperties",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("WebAuthn.credentialAdded")

@@ -486,7 +486,7 @@ def clear_device_metrics_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT
     cmd_dict: T_JSON_DICT = {
         "method": "Emulation.clearDeviceMetricsOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_geolocation_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -496,7 +496,7 @@ def clear_geolocation_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, N
     cmd_dict: T_JSON_DICT = {
         "method": "Emulation.clearGeolocationOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def reset_page_scale_factor() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -508,7 +508,7 @@ def reset_page_scale_factor() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None
     cmd_dict: T_JSON_DICT = {
         "method": "Emulation.resetPageScaleFactor",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_focus_emulation_enabled(
@@ -527,7 +527,7 @@ def set_focus_emulation_enabled(
         "method": "Emulation.setFocusEmulationEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_auto_dark_mode_override(
@@ -547,7 +547,7 @@ def set_auto_dark_mode_override(
         "method": "Emulation.setAutoDarkModeOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_cpu_throttling_rate(
@@ -564,7 +564,7 @@ def set_cpu_throttling_rate(
         "method": "Emulation.setCPUThrottlingRate",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_default_background_color_override(
@@ -583,7 +583,7 @@ def set_default_background_color_override(
         "method": "Emulation.setDefaultBackgroundColorOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_device_metrics_override(
@@ -651,7 +651,7 @@ def set_device_metrics_override(
         "method": "Emulation.setDeviceMetricsOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_device_posture_override(
@@ -671,7 +671,7 @@ def set_device_posture_override(
         "method": "Emulation.setDevicePostureOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_device_posture_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -686,7 +686,7 @@ def clear_device_posture_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT
     cmd_dict: T_JSON_DICT = {
         "method": "Emulation.clearDevicePostureOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_scrollbars_hidden(
@@ -705,7 +705,7 @@ def set_scrollbars_hidden(
         "method": "Emulation.setScrollbarsHidden",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_document_cookie_disabled(
@@ -724,7 +724,7 @@ def set_document_cookie_disabled(
         "method": "Emulation.setDocumentCookieDisabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_emit_touch_events_for_mouse(
@@ -746,7 +746,7 @@ def set_emit_touch_events_for_mouse(
         "method": "Emulation.setEmitTouchEventsForMouse",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_emulated_media(
@@ -768,7 +768,7 @@ def set_emulated_media(
         "method": "Emulation.setEmulatedMedia",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_emulated_vision_deficiency(
@@ -785,7 +785,7 @@ def set_emulated_vision_deficiency(
         "method": "Emulation.setEmulatedVisionDeficiency",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_geolocation_override(
@@ -812,7 +812,7 @@ def set_geolocation_override(
         "method": "Emulation.setGeolocationOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def get_overridden_sensor_information(
@@ -861,7 +861,7 @@ def set_sensor_override_enabled(
         "method": "Emulation.setSensorOverrideEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_sensor_override_readings(
@@ -883,7 +883,7 @@ def set_sensor_override_readings(
         "method": "Emulation.setSensorOverrideReadings",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_pressure_source_override_enabled(
@@ -912,7 +912,7 @@ def set_pressure_source_override_enabled(
         "method": "Emulation.setPressureSourceOverrideEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_pressure_state_override(
@@ -935,7 +935,7 @@ def set_pressure_state_override(
         "method": "Emulation.setPressureStateOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_idle_override(
@@ -954,7 +954,7 @@ def set_idle_override(
         "method": "Emulation.setIdleOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def clear_idle_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
@@ -964,7 +964,7 @@ def clear_idle_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     cmd_dict: T_JSON_DICT = {
         "method": "Emulation.clearIdleOverride",
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -986,7 +986,7 @@ def set_navigator_overrides(
         "method": "Emulation.setNavigatorOverrides",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_page_scale_factor(
@@ -1005,7 +1005,7 @@ def set_page_scale_factor(
         "method": "Emulation.setPageScaleFactor",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_script_execution_disabled(
@@ -1022,7 +1022,7 @@ def set_script_execution_disabled(
         "method": "Emulation.setScriptExecutionDisabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_touch_emulation_enabled(
@@ -1042,7 +1042,7 @@ def set_touch_emulation_enabled(
         "method": "Emulation.setTouchEmulationEnabled",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_virtual_time_policy(
@@ -1098,7 +1098,7 @@ def set_locale_override(
         "method": "Emulation.setLocaleOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_timezone_override(
@@ -1115,7 +1115,7 @@ def set_timezone_override(
         "method": "Emulation.setTimezoneOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @deprecated(version="1.3")
@@ -1141,7 +1141,7 @@ def set_visible_size(
         "method": "Emulation.setVisibleSize",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_disabled_image_types(
@@ -1160,7 +1160,7 @@ def set_disabled_image_types(
         "method": "Emulation.setDisabledImageTypes",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_hardware_concurrency_override(
@@ -1179,7 +1179,7 @@ def set_hardware_concurrency_override(
         "method": "Emulation.setHardwareConcurrencyOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_user_agent_override(
@@ -1209,7 +1209,7 @@ def set_user_agent_override(
         "method": "Emulation.setUserAgentOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def set_automation_override(
@@ -1228,7 +1228,7 @@ def set_automation_override(
         "method": "Emulation.setAutomationOverride",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 @event_class("Emulation.virtualTimeBudgetExpired")

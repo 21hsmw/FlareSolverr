@@ -12,7 +12,7 @@ import typing
 from dataclasses import dataclass
 
 from . import storage
-from .util import T_JSON_DICT, event_class
+from .util import T_JSON_DICT
 
 
 class CacheId(str):
@@ -206,7 +206,7 @@ def delete_cache(cache_id: CacheId) -> typing.Generator[T_JSON_DICT, T_JSON_DICT
         "method": "CacheStorage.deleteCache",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def delete_entry(
@@ -225,7 +225,7 @@ def delete_entry(
         "method": "CacheStorage.deleteEntry",
         "params": params,
     }
-    json = yield cmd_dict
+    yield cmd_dict
 
 
 def request_cache_names(
